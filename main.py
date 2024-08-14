@@ -9,7 +9,7 @@ class Game:
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         programIcon = pygame.image.load('./images/Temp_Icon.png')
         pygame.display.set_icon(programIcon)
-        pygame.display.set_caption('BIH Gates I')
+        pygame.display.set_caption('Game')
         
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font('./fonts/04B_30__.TTF', 32)
