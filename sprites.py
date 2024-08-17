@@ -36,6 +36,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
+            
         
     def update(self):
         self.movement()
@@ -46,9 +47,11 @@ class Player(pygame.sprite.Sprite):
         self.collide_blocks('x')
         self.rect.y += self.y_change
         self.collide_blocks('y')
-        
+                
         self.x_change = 0
         self.y_change = 0
+    
+
     
     def movement(self):
         keys = pygame.key.get_pressed()
@@ -305,6 +308,8 @@ class Enemy(pygame.sprite.Sprite):
         self.groups = self.game.all_sprites, self.game.enemies
         pygame.sprite.Sprite.__init__(self, self.groups)
         
+    
+
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.width = TILESIZE
@@ -315,7 +320,7 @@ class Enemy(pygame.sprite.Sprite):
         self.y_change = 0
         self.animation_loop = 1
         self.movement_loop = 0
-        
+        self.self_speed = ENEMY_SPEED
         
         self.image = self.game.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
 
@@ -324,10 +329,18 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y = self.y
         
         self.facing = random.choice(['left','right', 'up', 'down'])
-        self.max_travel = random.randint(16,32)
+        self.max_travel = random.choice([32, 48, 64, 128])
+        
+        self.distance_to_player =0
+        self.relative_x = 0
+        self.relative_y = 0
 
     def update(self):
-        self.movement()
+        self.distance_calc()
+        if self.distance_to_player <128:
+            self.movement_active()
+        else:          
+            self.movement_idle()
         self.animate()
         
         self.rect.x += self.x_change
@@ -337,28 +350,69 @@ class Enemy(pygame.sprite.Sprite):
         
         self.x_change = 0
         self.y_change = 0
+         
+    def distance_calc(self):
+        self.relative_x = self.rect.x - 240
+        self.relative_y = self.rect.y - 192
+        self.distance_to_player = (math.sqrt((self.relative_x)**2+(self.relative_y)**2))
         
-    def movement(self):
+        
+    def movement_active(self):
+        
+        if self.relative_x <0:
+            self.facing = 'right'
+            self.movement_idle()
+        elif self.relative_x >0:
+            self.facing = 'left'
+            self.movement_idle()
+        else:
+            if self.relative_y <0:
+                self.facing = 'down'
+                self.movement_idle()
+            elif self.relative_y >0:
+                self.facing = 'up'
+                self.movement_idle()
+        
+                   
+        if self.relative_y <0:
+            self.facing = 'down'
+            self.movement_idle()
+        elif self.relative_y >0:
+            self.facing = 'up'
+            self.movement_idle()
+        else:
+            if self.relative_x <0:
+                self.facing = 'right'
+                self.movement_idle()
+            else:
+                self.facing = 'left'
+                self.movement_idle()
+    
+    def movement_idle(self):
         if self.facing == 'left':
-            self.x_change -= ENEMY_SPEED
+            self.x_change -= self.self_speed
             self.movement_loop-=1
             if self.movement_loop <= -self.max_travel:
                 self.facing = random.choice(['left','right', 'up', 'down'])
+                self.max_travel = random.choice([32, 48, 64, 128])
         elif self.facing == 'right':
-            self.x_change += ENEMY_SPEED
+            self.x_change += self.self_speed
             self.movement_loop+=1
             if self.movement_loop >= self.max_travel:
                 self.facing = random.choice(['left','right', 'up', 'down'])
+                self.max_travel = random.choice([32, 48, 64, 128])
         elif self.facing == 'up':
-            self.y_change -= ENEMY_SPEED
+            self.y_change -= self.self_speed
             self.movement_loop-=1
             if self.movement_loop <= -self.max_travel:
                 self.facing = random.choice(['left','right', 'up', 'down'])
+                self.max_travel = random.choice([32, 48, 64, 128])
         elif self.facing == 'down':
-            self.y_change += ENEMY_SPEED
+            self.y_change += self.self_speed
             self.movement_loop+=1
             if self.movement_loop >= self.max_travel:
                 self.facing = random.choice(['left','right', 'up', 'down'])
+                self.max_travel = random.choice([32, 48, 64, 128])
     
     def animate(self):
         down_animations = [self.game.enemy_spritesheet.get_sprite(0,0,self.width,self.height),
@@ -418,21 +472,21 @@ class Enemy(pygame.sprite.Sprite):
             hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False)
             if hits:
                 if self.x_change > 0:
-                    
+                    self.facing = random.choice(['left', 'up', 'down'])
                     
                     self.rect.x = hits[0].rect.left - self.rect.width
                 if self.x_change < 0:
-                    
+                    self.facing = random.choice(['right', 'up', 'down'])
                     self.rect.x = hits[0].rect.right 
                     
         if direction == "y":
             hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False)
             if hits:
                 if self.y_change > 0:
-                    
+                    self.facing = random.choice(['left','right', 'up'])
                     self.rect.y = hits[0].rect.top - self.rect.height
                 if self.y_change < 0:
-                    
+                    self.facing = random.choice(['left','right','down'])
                     self.rect.y = hits[0].rect.bottom
 
 

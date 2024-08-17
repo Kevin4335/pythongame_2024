@@ -4,10 +4,11 @@ from sprites import *
 from config import *
 from tilemaps import *
 
+
 class Game:
     def __init__(self):
         pygame.init()
-        
+
         mixer.init()
         mixer.music.load("./resources/a_dungeon_ambience_loop.mp3")
         self.blood_sound = pygame.mixer.Sound("./resources/blood_sound.wav")
@@ -15,7 +16,7 @@ class Game:
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         mixer.music.set_volume(0.2)
-        mixer.music.play(loops = -1)
+        mixer.music.play(loops=-1)
 
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         programIcon = pygame.image.load('./images/Temp_Icon.png')
@@ -29,6 +30,7 @@ class Game:
         self.intro_background = pygame.image.load('./images/pxArt.png')
         self.character_spritesheet = Spritesheet('./images/Character.png')
         self.enemy_spritesheet = Spritesheet('./images/Enemy1.png')
+        # self.game_over_png = pygame.image.load('./images/hilarious.png')
 
         # self.terrain_spritesheet = Spritesheet('./images/Terrain.png)
 
@@ -93,10 +95,10 @@ class Game:
             self.draw()
 
     def game_over(self):
-        text = self.font.render('GAME OVER', True, WHITE)
-        text_rect = text.get_rect(center=(WINDOW_WIDTH/2, WINDOW_HEIGHT/3))
+        text = self.font.render('GAME OVER', True, TITLE_TEXT)
+        text_rect = text.get_rect(center=(WINDOW_WIDTH/2, WINDOW_HEIGHT/9))
 
-        restart_button = Button(self, WINDOW_WIDTH/2 - 64, WINDOW_WIDTH/2, 128, 64)
+        restart_button = Button(self, WINDOW_WIDTH/2 - 64, WINDOW_HEIGHT - (2*WINDOW_HEIGHT/9), 128, 64)
 
         for sprite in self.all_sprites:
             sprite.kill()
@@ -112,8 +114,11 @@ class Game:
             if restart_button.is_pressed(mouse_pos, mouse_pressed):
                 self.new()
                 self.main()
+
+            # self.screen.blit(self.game_over_png, (0, 0))
             self.screen.blit(text, text_rect)
             self.screen.blit(restart_button.image, restart_button.rect)
+
             self.clock.tick(FPS)
             pygame.display.update()
 
@@ -147,7 +152,7 @@ g.intro_screen()
 g.new()
 
 while g.running:
-    
+
     g.main()
     g.game_over()
 
