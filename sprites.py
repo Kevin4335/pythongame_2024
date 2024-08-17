@@ -1,4 +1,5 @@
 import pygame 
+from pygame import mixer
 from config import *
 import math, random
 
@@ -112,6 +113,8 @@ class Player(pygame.sprite.Sprite):
     def collide_enemy(self):
         hits = pygame.sprite.spritecollide(self,self.game.enemies, False)
         if hits:
+            pygame.mixer.Sound.play(self.game.blood_sound)
+
             self.kill()
             self.game.playing = False
         
@@ -233,7 +236,7 @@ class Door(pygame.sprite.Sprite):
     def __init__(self, game, file, x, y):
         self.game = game 
         self._layer = DOOR_LAYER
-        self.groups = self.game.all_sprites
+        self.groups = self.game.all_sprites, self.game.doors
         pygame.sprite.Sprite.__init__(self, self.groups)
         
         self.x = x * TILESIZE
@@ -320,7 +323,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
         
-        self.facing = random.choice(['left','right'])
+        self.facing = random.choice(['left','right', 'up', 'down'])
         self.max_travel = random.randint(16,32)
 
     def update(self):
@@ -328,9 +331,9 @@ class Enemy(pygame.sprite.Sprite):
         self.animate()
         
         self.rect.x += self.x_change
-        #self.collide_blocks('x')
+        self.collide_blocks('x')
         self.rect.y += self.y_change
-        #self.collide_blocks('y')
+        self.collide_blocks('y')
         
         self.x_change = 0
         self.y_change = 0
@@ -340,12 +343,22 @@ class Enemy(pygame.sprite.Sprite):
             self.x_change -= ENEMY_SPEED
             self.movement_loop-=1
             if self.movement_loop <= -self.max_travel:
-                self.facing = 'right'
+                self.facing = random.choice(['left','right', 'up', 'down'])
         elif self.facing == 'right':
             self.x_change += ENEMY_SPEED
             self.movement_loop+=1
             if self.movement_loop >= self.max_travel:
-                self.facing = 'left'
+                self.facing = random.choice(['left','right', 'up', 'down'])
+        elif self.facing == 'up':
+            self.y_change -= ENEMY_SPEED
+            self.movement_loop-=1
+            if self.movement_loop <= -self.max_travel:
+                self.facing = random.choice(['left','right', 'up', 'down'])
+        elif self.facing == 'down':
+            self.y_change += ENEMY_SPEED
+            self.movement_loop+=1
+            if self.movement_loop >= self.max_travel:
+                self.facing = random.choice(['left','right', 'up', 'down'])
     
     def animate(self):
         down_animations = [self.game.enemy_spritesheet.get_sprite(0,0,self.width,self.height),
@@ -399,3 +412,60 @@ class Enemy(pygame.sprite.Sprite):
                 self.animation_loop += 0.1
                 if self.animation_loop>=3:
                     self.animation_loop = 1
+                    
+    def collide_blocks(self,direction):
+        if direction == "x":
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False)
+            if hits:
+                if self.x_change > 0:
+                    
+                    
+                    self.rect.x = hits[0].rect.left - self.rect.width
+                if self.x_change < 0:
+                    
+                    self.rect.x = hits[0].rect.right 
+                    
+        if direction == "y":
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False)
+            if hits:
+                if self.y_change > 0:
+                    
+                    self.rect.y = hits[0].rect.top - self.rect.height
+                if self.y_change < 0:
+                    
+                    self.rect.y = hits[0].rect.bottom
+
+
+class Button:
+    def __init__(self, game, x, y, width, height):
+        
+        
+        
+        self.x =x 
+        self.y = y
+        self.width = width 
+        self.height = height
+        self.game = game
+        
+        self.image = pygame.image.load('./images/start_button.png')
+        self.rect = self.image.get_rect()
+        
+        self.rect.x = self.x
+        self.rect.y = self.y
+        
+        # self.text = self.font.render(self.content, True, self.fg)
+        # self.text_rect = self.text.get_rect(center = (self.width/2, self.height/2))
+        # self.image.blit(self.text,self.text_rect)
+        
+    def is_pressed(self, pos,pressed):
+        
+        if self.rect.collidepoint(pos):
+            self.image = pygame.image.load('./images/start_button_pressed.png')
+            if pressed[0]:
+                pygame.mixer.Sound.play(self.game.click_sound)
+
+                return True
+            return False
+        self.image = pygame.image.load('./images/start_button.png')
+        return False
+        
