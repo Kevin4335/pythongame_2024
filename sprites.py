@@ -365,13 +365,6 @@ class Enemy(pygame.sprite.Sprite):
         elif self.relative_x >0:
             self.facing = 'left'
             self.movement_idle()
-        else:
-            if self.relative_y <0:
-                self.facing = 'down'
-                self.movement_idle()
-            elif self.relative_y >0:
-                self.facing = 'up'
-                self.movement_idle()
         
                    
         if self.relative_y <0:
@@ -380,13 +373,7 @@ class Enemy(pygame.sprite.Sprite):
         elif self.relative_y >0:
             self.facing = 'up'
             self.movement_idle()
-        else:
-            if self.relative_x <0:
-                self.facing = 'right'
-                self.movement_idle()
-            else:
-                self.facing = 'left'
-                self.movement_idle()
+
     
     def movement_idle(self):
         if self.facing == 'left':
