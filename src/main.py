@@ -4,19 +4,21 @@ from sprites import *
 from config import *
 from tilemaps import *
 from props import *
+import os
 
+dirname = os.path.dirname(__file__)
 
 class Game:
     def __init__(self):
         pygame.init()
 
         mixer.init()
-        mixer.music.load("resources/swamptheme1var.mp3")
-        self.blood_sound = pygame.mixer.Sound("resources/blood_sound.wav")
-        self.click_sound = pygame.mixer.Sound("resources/click.mp3")
-        self.prop_sound = pygame.mixer.Sound("resources/select-sound.mp3")
-        self.ui_hover = pygame.mixer.Sound("resources/bloop.mp3")
-        self.door_open = pygame.mixer.Sound("resources/open-doors.mp3")
+        mixer.music.load(os.path.join(dirname, "../resources/swamptheme1var.mp3"))
+        self.blood_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/blood_sound.wav"))
+        self.click_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/click.mp3"))
+        self.prop_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/select-sound.mp3"))
+        self.ui_hover = pygame.mixer.Sound(os.path.join(dirname, "../resources/bloop.mp3"))
+        self.door_open = pygame.mixer.Sound(os.path.join(dirname, "../resources/open-doors.mp3"))
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         self.prop_sound.set_volume(0.1)
@@ -26,18 +28,18 @@ class Game:
         mixer.music.play(loops=-1)
 
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        programIcon = pygame.image.load('images/Temp_Icon.png')
+        programIcon = pygame.image.load(os.path.join(dirname, "../images/Temp_Icon.png"))
         pygame.display.set_icon(programIcon)
         pygame.display.set_caption('Game')
 
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font('fonts/04B_30__.TTF', 32)
-        self.font2 = pygame.font.Font('fonts/dogica.ttf', 16)
+        self.font = pygame.font.Font(os.path.join(dirname, "../fonts/04B_30__.TTF"), 32)
+        self.font2 = pygame.font.Font(os.path.join(dirname, "../fonts/dogica.ttf"), 16)
 
         self.running = True
-        self.intro_background = pygame.image.load('images/pxArt.png')
-        self.character_spritesheet = Spritesheet('images/Character.png')
-        self.enemy_spritesheet = Spritesheet('images/Enemy1.png')
+        self.intro_background = pygame.image.load(os.path.join(dirname, '../images/pxArt.png'))
+        self.character_spritesheet = Spritesheet(os.path.join(dirname, '../images/Character.png'))
+        self.enemy_spritesheet = Spritesheet(os.path.join(dirname, '../images/Enemy1.png'))
 
         self.score = 0
         # self.game_over_png = pygame.image.load('images/hilarious.png')
@@ -48,13 +50,13 @@ class Game:
         for i, row in enumerate(tilemap):
             for j, column in enumerate(row):
                 if column == "B":
-                    Wall(self, 'images/bricks.png', j, i)
+                    Wall(self, os.path.join(dirname, '../images/bricks.png'), j, i)
                 if column == 'b':
                     Ground(self, j, i)
-                    Block(self, 'images/Bed.png', j, i)
+                    Block(self, os.path.join(dirname, '../images/Bed.png'), j, i)
                 if column == 'D':
                     Ground(self, j, i)
-                    Door(self, 'images/Door.png', j, i)
+                    Door(self, os.path.join(dirname, '../images/Door.png'), j, i)
                 if column == "P":
                     Player(self, j, i)
                     Ground(self, j, i)
@@ -64,7 +66,7 @@ class Game:
                     Enemy(self, j, i)
                     Ground(self, j, i)
                 if column == 'c':
-                    Prop(self, 'images/chest.png', j, i, 'chest')
+                    Prop(self, os.path.join(dirname, '../images/chest.png'), j, i, 'chest')
                     Ground(self, j, i)
 
     def new(self):
