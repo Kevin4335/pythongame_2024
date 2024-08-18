@@ -338,6 +338,7 @@ class Enemy(pygame.sprite.Sprite):
     def update(self):
         self.distance_calc()
         if self.distance_to_player <128:
+            
             self.movement_active()
         else:          
             self.movement_idle()

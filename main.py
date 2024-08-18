@@ -125,7 +125,7 @@ class Game:
     def intro_screen(self):
         intro = True
 
-        title = self.font.render('Dark Dungeons', True, TITLE_TEXT)
+        title = self.font.render('Game', True, TITLE_TEXT)
         title_rect = title.get_rect(x=30, y=30)
         play_button = Button(self, 300, 300, 128, 64)
 
