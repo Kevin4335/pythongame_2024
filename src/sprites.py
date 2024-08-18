@@ -266,7 +266,7 @@ class Ground(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
         
-        self.image = pygame.image.load('./images/Stone_Brick.png')
+        self.image = pygame.image.load('images/Stone_Brick.png')
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
@@ -283,7 +283,7 @@ class MenuGraphic(pygame.sprite.Sprite):
         self.width = 480
         self.height = 224
         
-        self.image = pygame.image.load('./images/Menu_Graphic.png')
+        self.image = pygame.image.load('images/Menu_Graphic.png')
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
@@ -476,7 +476,7 @@ class Button:
         self.height = height
         self.game = game
         self.collided = False
-        self.image = pygame.image.load('./images/start_button.png')
+        self.image = pygame.image.load('images/start_button.png')
         self.rect = self.image.get_rect()
         
         self.rect.x = self.x
@@ -490,7 +490,7 @@ class Button:
         
         
         if self.rect.collidepoint(pos):
-            self.image = pygame.image.load('./images/start_button_pressed.png')
+            self.image = pygame.image.load('images/start_button_pressed.png')
             if self.collided == False:
                 pygame.mixer.Sound.play(self.game.ui_hover)
             self.collided = True
@@ -500,6 +500,6 @@ class Button:
 
                 return True
             return False
-        self.image = pygame.image.load('./images/start_button.png')
+        self.image = pygame.image.load('images/start_button.png')
         self.collided = False
         return False
