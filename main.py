@@ -80,7 +80,7 @@ class Game:
         self.props = pygame.sprite.LayeredUpdates()
 
         self.createTilemap(tilemap2)
-
+        self.score =0
         # MenuGraphic(self)
 
     def events(self):
@@ -111,7 +111,6 @@ class Game:
             self.draw()
 
     def game_over(self):
-        self.score =0
         text = self.font.render('GAME OVER', True, TITLE_TEXT)
         text_rect = text.get_rect(center=(WINDOW_WIDTH/2, WINDOW_HEIGHT/9))
 

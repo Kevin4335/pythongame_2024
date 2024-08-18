@@ -4,6 +4,17 @@ from sprites import *
 from config import *
 from tilemaps import *
 
+def score_update(game, num):
+    
+    if game.score > 99:
+        pass
+    elif game.score < 0:
+        pass
+    else:    
+        game.score = game.score + num
+
+
+
 class Prop(pygame.sprite.Sprite):
     def __init__(self, game, file, x, y, type):
         self.game = game 
@@ -28,6 +39,6 @@ class Prop(pygame.sprite.Sprite):
         
         if(pygame.sprite.spritecollide(self, self.game.player, False)):
             pygame.mixer.Sound.play(self.game.prop_sound)
-            self.game.score = self.game.score + 1
+            score_update(game, 1)
             self.kill()
             
