@@ -20,9 +20,9 @@ class Game:
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         self.prop_sound.set_volume(0.1)
-        self.ui_hover.set_volume(0.05)
+        self.ui_hover.set_volume(0.02)
         self.door_open.set_volume(0.1)
-        mixer.music.set_volume(0.1)
+        mixer.music.set_volume(0.07)
         mixer.music.play(loops=-1)
 
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -92,7 +92,7 @@ class Game:
 
     def update(self):
         # gameloop updates
-        self.all_sprites.update(self)
+        self.all_sprites.update()
 
     def draw(self):
         # gameloop draw

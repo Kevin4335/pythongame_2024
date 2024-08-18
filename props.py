@@ -35,10 +35,10 @@ class Prop(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
         
-    def update(self, game):
+    def update(self):
         
         if(pygame.sprite.spritecollide(self, self.game.player, False)):
             pygame.mixer.Sound.play(self.game.prop_sound)
-            score_update(game, 1)
+            score_update(self.game, 1)
             self.kill()
             

@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = self.y
             
         
-    def update(self, game):
+    def update(self):
         self.movement()
         self.collide_enemy()
         self.animate()
@@ -216,25 +216,6 @@ class Block(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-class Prop(pygame.sprite.Sprite):
-    def __init__(self, game, file, x, y):
-        self.game = game 
-        self._layer = PROP_LAYER
-        self.groups = self.game.all_sprites
-        pygame.sprite.Sprite.__init__(self, self.groups)
-        
-        self.x = x * TILESIZE
-        self.y = y * TILESIZE
-        
-        self.width = TILESIZE
-        self.height = TILESIZE
-        
-        self.image = pygame.image.load(file)
-        
-        self.rect = self.image.get_rect()
-        self.rect.x = self.x
-        self.rect.y = self.y
-
 class Door(pygame.sprite.Sprite):
     def __init__(self, game, file, x, y):
         self.game = game 
@@ -257,7 +238,7 @@ class Door(pygame.sprite.Sprite):
         
         self.opened = 0
         
-    def update(self, game):
+    def update(self):
         
         if(pygame.sprite.spritecollide(self, self.game.player, False)):
             self.image = self.Door_spritesheet.get_sprite(32,0,self.width,self.height)
@@ -341,7 +322,7 @@ class Enemy(pygame.sprite.Sprite):
         self.relative_x = 0
         self.relative_y = 0
 
-    def update(self, game):
+    def update(self):
         self.distance_calc()
         if self.distance_to_player <128:
             
@@ -359,8 +340,8 @@ class Enemy(pygame.sprite.Sprite):
         self.y_change = 0
          
     def distance_calc(self):
-        self.relative_x = self.rect.x - 240
-        self.relative_y = self.rect.y - 192
+        self.relative_x = self.rect.x - PLAYER_X
+        self.relative_y = self.rect.y - PLAYER_Y
         self.distance_to_player = (math.sqrt((self.relative_x)**2+(self.relative_y)**2))
         
         
