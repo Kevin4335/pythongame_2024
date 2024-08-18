@@ -3,6 +3,7 @@ import sys
 from sprites import *
 from config import *
 from tilemaps import *
+from props import *
 
 
 class Game:
@@ -10,12 +11,18 @@ class Game:
         pygame.init()
 
         mixer.init()
-        mixer.music.load("./resources/a_dungeon_ambience_loop.mp3")
+        mixer.music.load("./resources/swamptheme1var.mp3")
         self.blood_sound = pygame.mixer.Sound("./resources/blood_sound.wav")
         self.click_sound = pygame.mixer.Sound("./resources/click.mp3")
+        self.prop_sound = pygame.mixer.Sound("./resources/select-sound.mp3")
+        self.ui_hover = pygame.mixer.Sound("./resources/bloop.mp3")
+        self.door_open = pygame.mixer.Sound("./resources/open-doors.mp3")
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
-        mixer.music.set_volume(0.2)
+        self.prop_sound.set_volume(0.1)
+        self.ui_hover.set_volume(0.05)
+        self.door_open.set_volume(0.1)
+        mixer.music.set_volume(0.1)
         mixer.music.play(loops=-1)
 
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -25,11 +32,14 @@ class Game:
 
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font('./fonts/04B_30__.TTF', 32)
+        self.font2 = pygame.font.Font('./fonts/dogica.ttf', 16)
 
         self.running = True
         self.intro_background = pygame.image.load('./images/pxArt.png')
         self.character_spritesheet = Spritesheet('./images/Character.png')
         self.enemy_spritesheet = Spritesheet('./images/Enemy1.png')
+
+        self.score = 0
         # self.game_over_png = pygame.image.load('./images/hilarious.png')
 
         # self.terrain_spritesheet = Spritesheet('./images/Terrain.png)
@@ -39,7 +49,7 @@ class Game:
             for j, column in enumerate(row):
                 if column == "B":
                     Wall(self, './images/bricks.png', j, i)
-                if column == 'c':
+                if column == 'b':
                     Ground(self, j, i)
                     Block(self, './images/Bed.png', j, i)
                 if column == 'D':
@@ -53,6 +63,9 @@ class Game:
                 if column == 'e':
                     Enemy(self, j, i)
                     Ground(self, j, i)
+                if column == 'c':
+                    Prop(self, './images/chest.png', j, i, 'chest')
+                    Ground(self, j, i)
 
     def new(self):
         # new game starts
@@ -64,6 +77,7 @@ class Game:
         self.enemies = pygame.sprite.LayeredUpdates()
         self.doors = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
+        self.props = pygame.sprite.LayeredUpdates()
 
         self.createTilemap(tilemap2)
 
@@ -78,27 +92,31 @@ class Game:
 
     def update(self):
         # gameloop updates
-        self.all_sprites.update()
+        self.all_sprites.update(self)
 
     def draw(self):
         # gameloop draw
         self.screen.fill(BACKGROUND_COLOR)
         self.all_sprites.draw(self.screen)
+        self.score_counter()
         self.clock.tick(FPS)
         pygame.display.update()
 
     def main(self):
         # game loop
         while self.playing:
+
             self.events()
             self.update()
             self.draw()
 
     def game_over(self):
+        self.score =0
         text = self.font.render('GAME OVER', True, TITLE_TEXT)
         text_rect = text.get_rect(center=(WINDOW_WIDTH/2, WINDOW_HEIGHT/9))
 
-        restart_button = Button(self, WINDOW_WIDTH/2 - 64, WINDOW_HEIGHT - (2*WINDOW_HEIGHT/9), 128, 64)
+        restart_button = Button(self, WINDOW_WIDTH/2 - 64,
+                                WINDOW_HEIGHT - (2*WINDOW_HEIGHT/9), 128, 64)
 
         for sprite in self.all_sprites:
             sprite.kill()
@@ -125,7 +143,7 @@ class Game:
     def intro_screen(self):
         intro = True
 
-        title = self.font.render('Game', True, TITLE_TEXT)
+        title = self.font.render('Supermegaglop II', True, TITLE_TEXT)
         title_rect = title.get_rect(x=30, y=30)
         play_button = Button(self, 300, 300, 128, 64)
 
@@ -145,6 +163,13 @@ class Game:
             self.screen.blit(play_button.image, play_button.rect)
             self.clock.tick(FPS)
             pygame.display.update()
+
+    def score_counter(self):
+        text = self.font2.render("Exp: " + str(self.score), True, TITLE_TEXT)
+        text_rect = text.get_rect(topleft=(10, 10))
+
+        # self.screen.blit(self.game_over_png, (0, 0))
+        self.screen.blit(text, text_rect)
 
 
 g = Game()

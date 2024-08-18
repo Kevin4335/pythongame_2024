@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = self.y
             
         
-    def update(self):
+    def update(self, game):
         self.movement()
         self.collide_enemy()
         self.animate()
@@ -255,13 +255,19 @@ class Door(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
         
-    def update(self):
+        self.opened = 0
+        
+    def update(self, game):
         
         if(pygame.sprite.spritecollide(self, self.game.player, False)):
             self.image = self.Door_spritesheet.get_sprite(32,0,self.width,self.height)
-            
+            if self.opened == 0:
+                pygame.mixer.Sound.play(self.game.door_open)
+                
+            self.opened = 1
         else:
             self.image = self.Door_spritesheet.get_sprite(0,0,self.width,self.height)
+            self.opened = 0
             
         
     
@@ -335,7 +341,7 @@ class Enemy(pygame.sprite.Sprite):
         self.relative_x = 0
         self.relative_y = 0
 
-    def update(self):
+    def update(self, game):
         self.distance_calc()
         if self.distance_to_player <128:
             
@@ -488,7 +494,7 @@ class Button:
         self.width = width 
         self.height = height
         self.game = game
-        
+        self.collided = False
         self.image = pygame.image.load('./images/start_button.png')
         self.rect = self.image.get_rect()
         
@@ -501,13 +507,18 @@ class Button:
         
     def is_pressed(self, pos,pressed):
         
+        
         if self.rect.collidepoint(pos):
             self.image = pygame.image.load('./images/start_button_pressed.png')
+            if self.collided == False:
+                pygame.mixer.Sound.play(self.game.ui_hover)
+            self.collided = True
+            
             if pressed[0]:
                 pygame.mixer.Sound.play(self.game.click_sound)
 
                 return True
             return False
         self.image = pygame.image.load('./images/start_button.png')
+        self.collided = False
         return False
-        
