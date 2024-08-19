@@ -350,22 +350,43 @@ class Enemy(pygame.sprite.Sprite):
         
     def movement_active(self):
         
+        
         if self.relative_x <0:
             self.facing = 'right'
-            self.movement_idle()
+            self.movement_forward()
         elif self.relative_x >0:
             self.facing = 'left'
-            self.movement_idle()
+            self.movement_forward()
         
                    
         if self.relative_y <0:
             self.facing = 'down'
-            self.movement_idle()
+            self.movement_forward()
         elif self.relative_y >0:
             self.facing = 'up'
-            self.movement_idle()
+            self.movement_forward()
 
-    
+    def movement_forward(self):
+        if self.facing == 'left':
+            self.x_change -= self.self_speed
+            self.movement_loop-=1
+            if self.movement_loop <= -self.max_travel:
+                self.max_travel = random.choice([32, 48, 64, 128])
+        elif self.facing == 'right':
+            self.x_change += self.self_speed
+            self.movement_loop+=1
+            if self.movement_loop >= self.max_travel:
+                self.max_travel = random.choice([32, 48, 64, 128])
+        elif self.facing == 'up':
+            self.y_change -= self.self_speed
+            self.movement_loop-=1
+            if self.movement_loop <= -self.max_travel:
+                self.max_travel = random.choice([32, 48, 64, 128])
+        elif self.facing == 'down':
+            self.y_change += self.self_speed
+            self.movement_loop+=1
+            if self.movement_loop >= self.max_travel:
+                self.max_travel = random.choice([32, 48, 64, 128])
     def movement_idle(self):
         if self.facing == 'left':
             self.x_change -= self.self_speed
