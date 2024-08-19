@@ -39,12 +39,19 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
+        
+        self.health = game.health
+        self.collided = False
+        
+        self.last = pygame.time.get_ticks()
+        self.damage_cooldown = 1000 
             
         
     def update(self):
         self.movement()
-        self.collide_enemy()
+        
         self.animate()
+        self.collide_enemy()
         
         self.rect.x += self.x_change
         self.collide_blocks('x')
@@ -119,11 +126,34 @@ class Player(pygame.sprite.Sprite):
     def collide_enemy(self):
         hits = pygame.sprite.spritecollide(self,self.game.enemies, False)
         if hits:
-            pygame.mixer.Sound.play(self.game.blood_sound)
-
-            self.kill()
-            self.game.playing = False
+            self.now = pygame.time.get_ticks()
+            if self.now - self.last >= self.damage_cooldown:
+                self.last = self.now
+                
+                pygame.mixer.Sound.play(self.game.blood_sound)
+                
+                self.game.health = self.game.health-1
+                
+                
+                self.flicker()
+                
+                if self.game.health <=0:
+                    
+                    self.kill()
+                    self.game.playing = False
+                
+            self.collided = True
+        else:
+            self.collided = False
         
+    def flicker(self):
+        self.alast = pygame.time.get_ticks()
+        self.flicker_timer = 100
+        # print("HI!")
+        
+        self.image = self.game.damaged.get_sprite(0,0,self.width,self.height)
+        
+                
                     
     def animate(self):
         down_animations = [self.game.character_spritesheet.get_sprite(0,0,self.width,self.height),
@@ -370,23 +400,23 @@ class Enemy(pygame.sprite.Sprite):
         if self.facing == 'left':
             self.x_change -= self.self_speed
             self.movement_loop-=1
-            if self.movement_loop <= -self.max_travel:
-                self.max_travel = random.choice([32, 48, 64, 128])
+            # if self.movement_loop <= -self.max_travel:
+            #     self.max_travel = random.choice([32, 48, 64, 128])
         elif self.facing == 'right':
             self.x_change += self.self_speed
             self.movement_loop+=1
-            if self.movement_loop >= self.max_travel:
-                self.max_travel = random.choice([32, 48, 64, 128])
+            # if self.movement_loop >= self.max_travel:
+            #     self.max_travel = random.choice([32, 48, 64, 128])
         elif self.facing == 'up':
             self.y_change -= self.self_speed
             self.movement_loop-=1
-            if self.movement_loop <= -self.max_travel:
-                self.max_travel = random.choice([32, 48, 64, 128])
+            # if self.movement_loop <= -self.max_travel:
+            #     self.max_travel = random.choice([32, 48, 64, 128])
         elif self.facing == 'down':
             self.y_change += self.self_speed
             self.movement_loop+=1
-            if self.movement_loop >= self.max_travel:
-                self.max_travel = random.choice([32, 48, 64, 128])
+            # if self.movement_loop >= self.max_travel:
+            #     self.max_travel = random.choice([32, 48, 64, 128])
     def movement_idle(self):
         if self.facing == 'left':
             self.x_change -= self.self_speed
@@ -477,6 +507,7 @@ class Enemy(pygame.sprite.Sprite):
                 if self.x_change < 0:
                     self.facing = random.choice(['right', 'up', 'down'])
                     self.rect.x = hits[0].rect.right 
+            
                     
         if direction == "y":
             hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False)

@@ -27,11 +27,13 @@ class Game:
             os.path.join(dirname, "../resources/bloop.mp3"))
         self.door_open = pygame.mixer.Sound(
             os.path.join(dirname, "../resources/open-doors.mp3"))
+        self.coin_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/coins.mp3"))
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         self.prop_sound.set_volume(0.1)
         self.ui_hover.set_volume(0.02)
         self.door_open.set_volume(0.1)
+        self.coin_sound.set_volume(0.05)
         mixer.music.set_volume(0.07)
         mixer.music.play(loops=-1)
 
@@ -54,8 +56,11 @@ class Game:
             os.path.join(dirname, '../images/Character.png'))
         self.enemy_spritesheet = Spritesheet(
             os.path.join(dirname, '../images/Enemy1.png'))
+        self.damaged = Spritesheet(
+            os.path.join(dirname, '../images/damaged.png'))
 
         self.score = 0
+        self.health = 5
         # self.game_over_png = pygame.image.load('images/hilarious.png')
 
         # self.terrain_spritesheet = Spritesheet('images/Terrain.png)
@@ -81,7 +86,7 @@ class Game:
                     Ground(self, j, i)
                 if column == 'c':
                     Prop(self, os.path.join(
-                        dirname, '../images/chest.png'), j, i, 'chest')
+                        dirname, '../images/coins.png'), j, i, 'chest')
                     Ground(self, j, i)
 
     def new(self):
@@ -99,6 +104,7 @@ class Game:
         self.createTilemap(tilemap2)
         self.menu = Menu(self)
         self.score = 0
+        self.health = 5
         # MenuGraphic(self)
 
     def events(self):
