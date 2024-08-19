@@ -86,7 +86,7 @@ class Game:
 
     def new(self):
         # new game starts
-        
+
         self.playing = True
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.player = pygame.sprite.LayeredUpdates()
@@ -163,7 +163,9 @@ class Game:
         intro = True
 
         title = self.font.render('Supermegaglop II', True, TITLE_TEXT)
+        subtitle = self.font2.render('by Kevin Chang', True, TITLE_TEXT)
         title_rect = title.get_rect(x=30, y=30)
+        subtitle_rect = title.get_rect(x=30, y=610)
         play_button = Button(self, 300, 500, 128, 64)
 
         while intro:
@@ -179,6 +181,7 @@ class Game:
                 intro = False
             self.screen.blit(self.intro_background, (0, 0))
             self.screen.blit(title, title_rect)
+            self.screen.blit(subtitle, subtitle_rect)
             self.screen.blit(play_button.image, play_button.rect)
             self.clock.tick(FPS)
             pygame.display.update()
