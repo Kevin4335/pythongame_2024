@@ -1,8 +1,8 @@
 tilemap2= [
     'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB                        ',
     'B...bB.....B.................B...bB       BBBBBB           ',
-    'B....B.....B.................D....B       B....B           ',
-    'B....B.....B.................B....B       B....B           ',
+    'B....B.....B........ccccccc..D....B       B....B           ',
+    'B....B.....B.........cccc....B....B       B....B           ',
     'BBDBBBBBBDBB.................BBDBBBBBBBBBBBBB.BBBBBBBBBBBBB',
     'B............................B........e...................B',
     'BBDBBB.......................B............................B',

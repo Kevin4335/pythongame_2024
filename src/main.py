@@ -5,20 +5,28 @@ from config import *
 from tilemaps import *
 from props import *
 import os
+from menu import *
 
 dirname = os.path.dirname(__file__)
+
 
 class Game:
     def __init__(self):
         pygame.init()
 
         mixer.init()
-        mixer.music.load(os.path.join(dirname, "../resources/swamptheme1var.mp3"))
-        self.blood_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/blood_sound.wav"))
-        self.click_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/click.mp3"))
-        self.prop_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/select-sound.mp3"))
-        self.ui_hover = pygame.mixer.Sound(os.path.join(dirname, "../resources/bloop.mp3"))
-        self.door_open = pygame.mixer.Sound(os.path.join(dirname, "../resources/open-doors.mp3"))
+        mixer.music.load(os.path.join(
+            dirname, "../resources/swamptheme1var.mp3"))
+        self.blood_sound = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/blood_sound.wav"))
+        self.click_sound = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/click.mp3"))
+        self.prop_sound = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/select-sound.mp3"))
+        self.ui_hover = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/bloop.mp3"))
+        self.door_open = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/open-doors.mp3"))
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         self.prop_sound.set_volume(0.1)
@@ -28,18 +36,24 @@ class Game:
         mixer.music.play(loops=-1)
 
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        programIcon = pygame.image.load(os.path.join(dirname, "../images/Temp_Icon.png"))
+        programIcon = pygame.image.load(
+            os.path.join(dirname, "../images/Temp_Icon.png"))
         pygame.display.set_icon(programIcon)
         pygame.display.set_caption('Game')
 
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font(os.path.join(dirname, "../fonts/04B_30__.TTF"), 32)
-        self.font2 = pygame.font.Font(os.path.join(dirname, "../fonts/dogica.ttf"), 16)
+        self.font = pygame.font.Font(os.path.join(
+            dirname, "../fonts/04B_30__.TTF"), 32)
+        self.font2 = pygame.font.Font(
+            os.path.join(dirname, "../fonts/dogica.ttf"), 16)
 
         self.running = True
-        self.intro_background = pygame.image.load(os.path.join(dirname, '../images/pxArt.png'))
-        self.character_spritesheet = Spritesheet(os.path.join(dirname, '../images/Character.png'))
-        self.enemy_spritesheet = Spritesheet(os.path.join(dirname, '../images/Enemy1.png'))
+        self.intro_background = pygame.image.load(
+            os.path.join(dirname, '../images/pxArt.png'))
+        self.character_spritesheet = Spritesheet(
+            os.path.join(dirname, '../images/Character.png'))
+        self.enemy_spritesheet = Spritesheet(
+            os.path.join(dirname, '../images/Enemy1.png'))
 
         self.score = 0
         # self.game_over_png = pygame.image.load('images/hilarious.png')
@@ -66,12 +80,13 @@ class Game:
                     Enemy(self, j, i)
                     Ground(self, j, i)
                 if column == 'c':
-                    Prop(self, os.path.join(dirname, '../images/chest.png'), j, i, 'chest')
+                    Prop(self, os.path.join(
+                        dirname, '../images/chest.png'), j, i, 'chest')
                     Ground(self, j, i)
 
     def new(self):
         # new game starts
-
+        
         self.playing = True
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.player = pygame.sprite.LayeredUpdates()
@@ -82,7 +97,8 @@ class Game:
         self.props = pygame.sprite.LayeredUpdates()
 
         self.createTilemap(tilemap2)
-        self.score =0
+        self.menu = Menu(self)
+        self.score = 0
         # MenuGraphic(self)
 
     def events(self):
@@ -95,13 +111,15 @@ class Game:
     def update(self):
         # gameloop updates
         self.all_sprites.update()
+        self.menu.update(self)
 
     def draw(self):
         # gameloop draw
         self.screen.fill(BACKGROUND_COLOR)
         self.all_sprites.draw(self.screen)
-        self.score_counter()
+        self.menu.update(self)
         self.clock.tick(FPS)
+
         pygame.display.update()
 
     def main(self):
@@ -146,7 +164,7 @@ class Game:
 
         title = self.font.render('Supermegaglop II', True, TITLE_TEXT)
         title_rect = title.get_rect(x=30, y=30)
-        play_button = Button(self, 300, 300, 128, 64)
+        play_button = Button(self, 300, 500, 128, 64)
 
         while intro:
             for event in pygame.event.get():
@@ -164,13 +182,6 @@ class Game:
             self.screen.blit(play_button.image, play_button.rect)
             self.clock.tick(FPS)
             pygame.display.update()
-
-    def score_counter(self):
-        text = self.font2.render("Exp: " + str(self.score), True, TITLE_TEXT)
-        text_rect = text.get_rect(topleft=(10, 10))
-
-        # self.screen.blit(self.game_over_png, (0, 0))
-        self.screen.blit(text, text_rect)
 
 
 g = Game()
