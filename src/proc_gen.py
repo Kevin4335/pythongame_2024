@@ -203,7 +203,6 @@ class SpecDoor(pygame.sprite.Sprite):
                             crash = True
                             break
         if self.type == "right":
-            print(self.game.wall_list)
             for self.r in range(self.rows):
                 if crash:
                     break
