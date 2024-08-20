@@ -29,6 +29,8 @@ class SpecDoor(pygame.sprite.Sprite):
         self.opened = 0
         self.activated = 0
         
+        self.room = room0
+        
     def activate(self):
         if self.activated == 0:
             self.create_room()
@@ -38,13 +40,13 @@ class SpecDoor(pygame.sprite.Sprite):
     
     def create_room(self):
         if self.type == "right":
-            self.room = random.choice([roomR1, roomR2, roomR3])
+            self.room = random.choice([testR1])
         elif self.type == "down":
-            self.room = random.choice([roomD1, roomD2, roomD3])
+            self.room = random.choice([testB1])
         elif self.type == "left":
-            self.room = random.choice([roomL1, roomL2, roomL3])
+            self.room = random.choice([testL1])
         elif self.type == "up":
-            self.room = random.choice([roomU1, roomU2, roomU3])
+            self.room = random.choice([testU1])
         self.new_start_x =-1
         self.new_start_y = -1
         
@@ -62,16 +64,28 @@ class SpecDoor(pygame.sprite.Sprite):
         else:
             self.image = self.Door_spritesheet.get_sprite(0,0,self.width,self.height)
             self.opened = 0
-            
-
-    def createTiles(self):
         
+                        
+    def createTiles(self):
+        self.rows = 0
+        self.cols = 0
         for i, row in enumerate(self.room):
+            self.rows = self.rows +1
             for j, column in enumerate(row):
+                self.cols = j
                 if column == "?":
                     self.new_start_x = j
                     self.new_start_y = i
-                    
+        
+        self.check_collide_tiles(self.rows, self.cols)
+        for i, row in enumerate(self.room):
+            self.rows = self.rows +1
+            for j, column in enumerate(row):
+                self.cols = j
+                if column == "?":
+                    self.new_start_x = j
+                    self.new_start_y = i
+        
         if self.type == "down":
             for i, row in enumerate(self.room):
                 for j, column in enumerate(row):
@@ -247,3 +261,120 @@ class SpecDoor(pygame.sprite.Sprite):
                     if column == "?":
                         Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
 
+            
+    def check_collide_tiles(self, rows, cols):
+        #print("##############################")
+        #print(self.game.wall_list)
+        self.rows = rows
+        self.cols = cols
+        #print(self.rect.y)
+        crash = False
+        #print(self.new_start_y)
+        if self.type == "left":
+            #print(self.game.wall_list)
+
+            for self.r in range(self.rows):
+                if crash:
+                    break
+                for self.c in range(self.cols):
+                    x_crash = self.rect.x-18 -(self.c * 16)                   
+                    y_crash = self.rect.y +((self.r-self.new_start_y)*16)
+                    if crash:
+                        break
+                    #print((y_crash))
+                    for wall in self.game.wall_list:
+                        if crash:
+                            break
+                        
+                        temp_modifier = 0
+                        if wall[0]%16 != 0:
+                            if (wall[0]-2)%16 == 0:
+                                temp_modifier = 2
+                            else:
+                                temp_modifier = -2
+                        if wall == (x_crash, y_crash + temp_modifier) :
+                            self.room = plugL
+                            crash = True
+                            break
+        if self.type == "right":
+            for self.r in range(self.rows):
+                if crash:
+                    break
+                for self.c in range(self.cols):
+                    x_crash = self.rect.x+18 +(self.c * 16)                   
+                    y_crash = self.rect.y +((self.r-self.new_start_y)*16)
+                    if crash:
+                        break
+                    #print((y_crash))
+                    for wall in self.game.wall_list:
+                        if crash:
+                            break
+                        
+                        temp_modifier = 0
+                        if wall[0]%16 != 0:
+                            if (wall[0]-2)%16 == 0:
+                                temp_modifier = 2
+                            else:
+                                temp_modifier = -2
+                                
+                        if wall == (x_crash, y_crash + temp_modifier) :
+                            self.room = plugR
+                            crash = True
+                            break
+        if self.type == "up":
+
+            for self.r in range(self.rows):
+                if crash:
+                    break
+                for self.c in range(self.cols):
+                    
+                    
+                    y_crash = self.rect.y-18 -(self.r * 16)                   
+                    x_crash = self.rect.x +((self.c-self.new_start_x)*16)
+                    if crash:
+                        break
+                    #print((x_crash,y_crash))
+                    for wall in self.game.wall_list:
+                        if crash:
+                            break
+                        
+                        temp_modifier = 0
+                        if wall[0]%16 != 0:
+                            if (wall[0]-2)%16 == 0:
+                                temp_modifier = 2
+                            else:
+                                temp_modifier = -2
+                        if wall == (x_crash + temp_modifier, y_crash) :
+                            self.room = plugU
+                            crash = True
+                            break
+                        
+        if self.type == "down":
+
+                for self.r in range(self.rows):
+                    if crash:
+                        break
+                    for self.c in range(self.cols):
+                        
+                        
+                        y_crash = self.rect.y+18 +(self.r * 16)                   
+                        x_crash = self.rect.x +((self.c-self.new_start_x)*16)
+                        if crash:
+                            break
+                        #print((x_crash,y_crash))
+                        for wall in self.game.wall_list:
+                            if crash:
+                                break
+                            
+                            temp_modifier = 0
+                            if wall[0]%16 != 0:
+                                if (wall[0]-2)%16 == 0:
+                                    temp_modifier = 2
+                                else:
+                                    temp_modifier = -2
+                            if wall == (x_crash + temp_modifier, y_crash) :
+                                self.room = plugD
+                                crash = True
+                                break
+
+                

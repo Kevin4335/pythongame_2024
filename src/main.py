@@ -62,7 +62,8 @@ class Game:
         self.score = 0
         self.health = 5
         # self.game_over_png = pygame.image.load('images/hilarious.png')
-
+        self.wall_num = 0
+        self.wall_list = []
         # self.terrain_spritesheet = Spritesheet('images/Terrain.png)
 
     def createTilemap(self, tilemap):

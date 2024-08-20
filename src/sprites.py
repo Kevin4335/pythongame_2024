@@ -6,6 +6,9 @@ import os
 
 dirname = os.path.dirname(__file__)
 
+
+
+
 class Spritesheet():
     def __init__(self, file):
         self.sheet = pygame.image.load(file).convert()
@@ -238,6 +241,14 @@ class Wall(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
+        
+        self.wall_num = self.game.wall_num
+        self.game.wall_list.append((self.rect.x, self.rect.y))
+        
+        self.game.wall_num = self.game.wall_num +1
+        
+    def update(self):
+        self.game.wall_list[self.wall_num] = (self.rect.x, self.rect.y)
 
 
             
@@ -261,6 +272,7 @@ class Block(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
+
 
 class Door(pygame.sprite.Sprite):
     def __init__(self, game, file, x, y):
@@ -286,7 +298,10 @@ class Door(pygame.sprite.Sprite):
         
         self.opened = 0
         
+        
+        
     def update(self):
+        
         
         if(pygame.sprite.spritecollide(self, self.game.player, False)):
             self.image = self.Door_spritesheet.get_sprite(32,0,self.width,self.height)

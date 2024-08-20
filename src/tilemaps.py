@@ -58,6 +58,24 @@ tilemap1= [
     '    BBBBBBBBBBBBBBBB          ',
 ]
 
+plugL=[
+    'BB',
+    'B?',
+    'BB'
+]
+plugR=[
+    'BB',
+    '?B',
+    'BB'
+]
+plugU=[
+    'BBB',
+    'B?B'
+]
+plugD=[
+    'B?B',
+    'BBB'
+]
 
 
 room0=[
@@ -68,6 +86,8 @@ room0=[
     'B.......B',
     'BBBBvBBBB'
 ]
+
+
 
 roomD1=[
     '    B?B      ',
@@ -246,4 +266,55 @@ roomU3 = [
     '       B.B        ',
     '       B.B        ',
     '       B?B        ',
+]
+
+
+testL1 = [
+    'BBBBBBBBBBBBBBBBBB',
+    'Bccc.............B',
+    'B................?',
+    'B..............c.B',
+    'B...........c....B',
+    'BBBBBBBBBBBBBBBB.B',
+    '               B.B',
+    '               B.B',
+    '               B.B',
+    '               B.B',
+    '               B.B',
+    '               B.B',
+    '               BBB',
+]
+
+
+testB1 = [
+    'B?B',
+    'B.B',
+    'B.B',
+    'B.B',
+    'B.B',
+    'B.B',
+    'B.B',
+    '<.>',
+    'BBB',
+]
+
+testR1 = [
+    'BBBBBBBBBBBBB^BBBB',
+    '?................B',
+    'BBBBBBBBBBBBBvBBBB',
+    
+    
+]
+
+testU1 = [
+    'BBB',
+    'B.B',
+    'B.B',
+    'B.B',
+    'B.B',
+    'B.B',
+    'B.B',
+    'B.B',
+    'B.B',
+    'B?B',
 ]
