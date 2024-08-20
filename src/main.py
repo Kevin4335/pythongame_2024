@@ -137,6 +137,7 @@ class Game:
         self.attacks = pygame.sprite.LayeredUpdates()
         self.props = pygame.sprite.LayeredUpdates()
         self.specdoors = pygame.sprite.LayeredUpdates()
+        self.walls  = pygame.sprite.LayeredUpdates()
 
         self.createTilemap(room0)
         self.menu = Menu(self)

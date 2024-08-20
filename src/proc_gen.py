@@ -40,6 +40,9 @@ class SpecDoor(pygame.sprite.Sprite):
         
     def activate(self):
         if self.activated == 0:
+            
+            for wall in self.game.walls:
+                wall.pseudoUpdate()
             self.create_room()
         
     
@@ -49,7 +52,7 @@ class SpecDoor(pygame.sprite.Sprite):
         if self.type == "right":
             self.room = random.choice([right_maps.a])
         elif self.type == "down":
-            self.room = random.choice([down_maps.a])
+            self.room = random.choice([down_maps.a, down_maps.b])
         elif self.type == "left":
             self.room = random.choice([left_maps.a])
         elif self.type == "up":
@@ -65,6 +68,7 @@ class SpecDoor(pygame.sprite.Sprite):
             self.image = self.Door_spritesheet.get_sprite(32,0,self.width,self.height)
             if self.opened == 0:
                 pygame.mixer.Sound.play(self.game.door_open)
+            
             
             self.activate()
             self.opened = 1
@@ -225,7 +229,6 @@ class SpecDoor(pygame.sprite.Sprite):
                             crash = True
                             break
         if self.type == "up":
-            print(self.game.wall_list)
             for self.r in range(self.rows):
                 if crash:
                     break

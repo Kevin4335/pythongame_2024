@@ -226,7 +226,7 @@ class Wall(pygame.sprite.Sprite):
         self.j = y
         self.game = game 
         self._layer = BLOCK_LAYER
-        self.groups = self.game.all_sprites, self.game.blocks
+        self.groups = self.game.all_sprites, self.game.blocks, self.game.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
         
         self.x = x * TILESIZE
@@ -247,7 +247,8 @@ class Wall(pygame.sprite.Sprite):
         
         self.game.wall_num = self.game.wall_num +1
         
-    def update(self):
+        
+    def pseudoUpdate(self):
         self.game.wall_list[self.wall_num] = (self.rect.x, self.rect.y)
 
 
