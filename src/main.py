@@ -58,12 +58,15 @@ class Game:
             os.path.join(dirname, '../images/Enemy1.png'))
         self.damaged = Spritesheet(
             os.path.join(dirname, '../images/damaged.png'))
+        
+        self.Wall_spritesheet = pygame.image.load(os.path.join(dirname, '../images/bricks.png'))
 
         self.score = 0
         self.health = 5
         # self.game_over_png = pygame.image.load('images/hilarious.png')
         self.wall_num = 0
         self.wall_list = []
+    
         # self.terrain_spritesheet = Spritesheet('images/Terrain.png)
 
     def createTilemap(self, tilemap):

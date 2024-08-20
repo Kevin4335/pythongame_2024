@@ -281,12 +281,12 @@ testL1 = [
     '               B.B',
     '               B.B',
     '               B.B',
-    '               B.B',
-    '               BBB',
+    '               <.>',
+    '               BvB',
 ]
 
 
-testB1 = [
+testD1 = [
     'B?B',
     'B.B',
     'B.B',
@@ -295,20 +295,20 @@ testB1 = [
     'B.B',
     'B.B',
     '<.>',
-    'BBB',
+    'BvB',
 ]
 
 testR1 = [
     'BBBBBBBBBBBBB^BBBB',
-    '?................B',
+    '?................>',
     'BBBBBBBBBBBBBvBBBB',
     
     
 ]
 
 testU1 = [
-    'BBB',
-    'B.B',
+    'B^B',
+    '<.>',
     'B.B',
     'B.B',
     'B.B',

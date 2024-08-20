@@ -235,8 +235,8 @@ class Wall(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
         
-        self.Door_spritesheet = Spritesheet(file)
-        self.image = self.Door_spritesheet.get_sprite(0,0,self.width,self.height)
+        self.Wall_spritesheet = Spritesheet(file)
+        self.image = self.Wall_spritesheet.get_sprite(0,0,self.width,self.height)
                
         self.rect = self.image.get_rect()
         self.rect.x = self.x
