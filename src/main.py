@@ -96,6 +96,10 @@ class Game:
                 if column == "P":
                     Ground(self, j, i)
                     #Player(self, j, i)
+                    
+                if column =="■":
+                    Ground(self, j, i)
+                    Block(self, os.path.join(dirname, '../images/box.png'), j, i)
                 if column == "^":
                     Ground(self, j, i)
                     SpecDoor(self,os.path.join(dirname, '../images/Door.png'), j, i, "up")

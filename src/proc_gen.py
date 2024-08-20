@@ -89,181 +89,67 @@ class SpecDoor(pygame.sprite.Sprite):
                     self.new_start_x = j
                     self.new_start_y = i
             
+        self.tile_generate()
+        
+    def tile_generate(self):
+        j_modifier = 0
+        i_modifier = 0
         
         if self.type == "down":
-            for i, row in enumerate(self.room):
-                for j, column in enumerate(row):
-                    if column == "B":
-                        Wall(self.game, os.path.join(dirname, '../images/bricks.png'), j+ (self.rect.x/16) - self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                    if column == 'b':
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                        Block(self.game, os.path.join(dirname, '../images/Bed.png'), j, i+ (self.rect.y/16)+self.new_start_y )
-                    if column == 'D':
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                        Door(self.game, os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                    
-                    if column == '.':
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                    if column == 'e':
-                        Enemy(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                    if column == 'c':
-                        Prop(self.game, os.path.join(
-                            dirname, '../images/coins.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y , 'chest')
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                        
-                    if column == "P":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                        #Player(self, j, i)
-                    if column == "^":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y , 'up')
-                        #Player(self, j, i)
-                    if column == "v":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y ,"down")
-                        #Player(self, j, i)
-                    if column == "<":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y ,"left")
-                        #Player(self, j, i)
-                    if column == ">":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y ,"right")
-                        #Player(self, j, i)
-                    if column == "?":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)+self.new_start_y )
-
+            j_modifier = (self.rect.x/16) - self.new_start_x
+            i_modifier = (self.rect.y/16) + self.new_start_y
         elif self.type == "right":
-            for i, row in enumerate(self.room):
-                for j, column in enumerate(row):
-                    if column == "B":
-                        Wall(self.game, os.path.join(dirname, '../images/bricks.png'), j+ (self.rect.x/16) + self.new_start_x  , i+ (self.rect.y/16)-self.new_start_y)
-                    if column == 'b':
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        Block(self.game, os.path.join(dirname, '../images/Bed.png'), j, i+ (self.rect.y/16)-self.new_start_y)
-                    if column == 'D':
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        Door(self.game, os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                    
-                    if column == '.':
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                    if column == 'e':
-                        Enemy(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                    if column == 'c':
-                        Prop(self.game, os.path.join(
-                            dirname, '../images/coins.png'), j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y, 'chest')
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        
-                    if column == "P":
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        #Player(self, j, i)
-                    if column == "^":
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y, 'up')
-                        #Player(self, j, i)
-                    if column == "v":
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y,"down")
-                        #Player(self, j, i)
-                    if column == "<":
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y,"left")
-                        #Player(self, j, i)
-                    if column == ">":
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y,"right")
-                        #Player(self, j, i)
-                    if column == "?":
-                        Ground(self.game, j+ (self.rect.x/16)+self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
+            j_modifier = (self.rect.x/16) + self.new_start_x
+            i_modifier = (self.rect.y/16) - self.new_start_y
         elif self.type == "left":
-            for i, row in enumerate(self.room):
-                for j, column in enumerate(row):
-                    if column == "B":
-                        Wall(self.game, os.path.join(dirname, '../images/bricks.png'), j+ (self.rect.x/16) - self.new_start_x  , i+ (self.rect.y/16)-self.new_start_y)
-                    if column == 'b':
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        Block(self.game, os.path.join(dirname, '../images/Bed.png'), j, i+ (self.rect.y/16)-self.new_start_y)
-                    if column == 'D':
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        Door(self.game, os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                    
-                    if column == '.':
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                    if column == 'e':
-                        Enemy(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                    if column == 'c':
-                        Prop(self.game, os.path.join(
-                            dirname, '../images/coins.png'), j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y, 'chest')
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        
-                    if column == "P":
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        #Player(self, j, i)
-                    if column == "^":
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y, 'up')
-                        #Player(self, j, i)
-                    if column == "v":
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y,"down")
-                        #Player(self, j, i)
-                    if column == "<":
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y,"left")
-                        #Player(self, j, i)
-                    if column == ">":
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y,"right")
-                        #Player(self, j, i)
-                    if column == "?":
-                        Ground(self.game, j+ (self.rect.x/16) - self.new_start_x , i+ (self.rect.y/16)-self.new_start_y)
-
+            j_modifier = (self.rect.x/16) - self.new_start_x
+            i_modifier = (self.rect.y/16) - self.new_start_y
         elif self.type == "up":
-            for i, row in enumerate(self.room):
+            j_modifier = (self.rect.x/16) - self.new_start_x
+            i_modifier = (self.rect.y/16) - self.new_start_y
+        
+        for i, row in enumerate(self.room):
                 for j, column in enumerate(row):                                                                               
                     if column == "B":
-                        Wall(self.game, os.path.join(dirname, '../images/bricks.png'), j+ (self.rect.x/16) - self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
+                        Wall(self.game, os.path.join(dirname, '../images/bricks.png'), j+ j_modifier, i + i_modifier )
                     if column == 'b':
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
-                        Block(self.game, os.path.join(dirname, '../images/Bed.png'), j, i+ (self.rect.y/16)-self.new_start_y )
+                        Ground(self.game, j+ j_modifier, i + i_modifier )
+                        Block(self.game, os.path.join(dirname, '../images/Bed.png'), j + j_modifier, i + i_modifier )
                     if column == 'D':
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
-                        Door(self.game, os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
+                        Ground(self.game, j + j_modifier, i + i_modifier )
+                        Door(self.game, os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier )
                     
                     if column == '.':
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
+                        Ground(self.game, j + j_modifier, i + i_modifier )
                     if column == 'e':
-                        Enemy(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
+                        Enemy(self.game, j + j_modifier, i + i_modifier )
+                        Ground(self.game, j + j_modifier, i + i_modifier )
                     if column == 'c':
                         Prop(self.game, os.path.join(
-                            dirname, '../images/coins.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y , 'chest')
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
+                            dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'chest')
+                        Ground(self.game, j + j_modifier, i + i_modifier )
                         
                     if column == "P":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
+                        Ground(self.game, j + j_modifier, i + i_modifier )
                         #Player(self, j, i)
                     if column == "^":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y , 'up')
+                        Ground(self.game, j + j_modifier, i + i_modifier )
+                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier , 'up')
                         #Player(self, j, i)
                     if column == "v":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y ,"down")
+                        Ground(self.game, j + j_modifier, i + i_modifier )
+                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier ,"down")
                         #Player(self, j, i)
                     if column == "<":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y ,"left")
+                        Ground(self.game, j + j_modifier, i + i_modifier )
+                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier ,"left")
                         #Player(self, j, i)
                     if column == ">":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y ,"right")
+                        Ground(self.game, j + j_modifier, i + i_modifier )
+                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier ,"right")
                         #Player(self, j, i)
                     if column == "?":
-                        Ground(self.game, j+ (self.rect.x/16)-self.new_start_x, i+ (self.rect.y/16)-self.new_start_y )
+                        Ground(self.game, j + j_modifier, i + i_modifier )
 
         
     def check_collide_tiles(self, rows, cols):
