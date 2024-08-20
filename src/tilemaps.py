@@ -1,3 +1,7 @@
+from maps import down_maps
+from maps import left_maps
+from maps import right_maps
+from maps import up_maps
 
 
 tilemap2= [
@@ -81,12 +85,17 @@ plugD=[
 
 
 room0=[
-    'BBBB^BBBB',
-    'B.......B',
-    '<.......>',
-    'B...P...B',
-    'B.......B',
-    'BBBBvBBBB'
+    'BBBBB^BBBBB',
+    'B.........B',
+    'B.........B',
+    'B.........B',
+    'B.........B',
+    '<....P....>',
+    'B.........B',
+    'B.........B',
+    'B.........B',
+    'B.........B',
+    'BBBBBvBBBBB'
 ]
 
 

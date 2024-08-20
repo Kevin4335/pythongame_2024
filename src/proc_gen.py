@@ -6,6 +6,13 @@ import os
 from tilemaps import *
 from sprites import *
 from props import *
+
+from maps import down_maps 
+from maps import left_maps
+from maps import right_maps
+from maps import up_maps
+
+
 class SpecDoor(pygame.sprite.Sprite):
     def __init__(self, game, file, x, y, type):
         self.game = game 
@@ -40,13 +47,13 @@ class SpecDoor(pygame.sprite.Sprite):
     
     def create_room(self):
         if self.type == "right":
-            self.room = random.choice([plugR])
+            self.room = random.choice([right_maps.a])
         elif self.type == "down":
-            self.room = random.choice([plugD])
+            self.room = random.choice([down_maps.a])
         elif self.type == "left":
-            self.room = random.choice([plugL])
+            self.room = random.choice([left_maps.a])
         elif self.type == "up":
-            self.room = random.choice([plugU])
+            self.room = random.choice([up_maps.a])
         self.new_start_x =-1
         self.new_start_y = -1
         
@@ -132,6 +139,9 @@ class SpecDoor(pygame.sprite.Sprite):
                     if column == "P":
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         #Player(self, j, i)
+                    if column =="■":
+                        Ground(self, j + j_modifier, i + i_modifier)
+                        Block(self, os.path.join(dirname, '../images/box.png'), j + j_modifier, i + i_modifier)
                     if column == "^":
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier , 'up')
@@ -178,7 +188,7 @@ class SpecDoor(pygame.sprite.Sprite):
                         
                         temp_modifier = 0
                         if wall[0]%16 != 0:
-                            if (wall[0]-2)%16 == 0:
+                            if (wall[0]-PLAYER_SPEED)%16 == 0:
                                 temp_modifier = PLAYER_SPEED
                             else:
                                 temp_modifier = -PLAYER_SPEED
@@ -204,7 +214,7 @@ class SpecDoor(pygame.sprite.Sprite):
                         
                         temp_modifier = 0
                         if wall[0]%16 != 0:
-                            if (wall[0]-2)%16 == 0:
+                            if (wall[0]-PLAYER_SPEED)%16 == 0:
                                 temp_modifier = PLAYER_SPEED
                             else:
                                 temp_modifier = -PLAYER_SPEED
@@ -215,7 +225,7 @@ class SpecDoor(pygame.sprite.Sprite):
                             crash = True
                             break
         if self.type == "up":
-            
+            print(self.game.wall_list)
             for self.r in range(self.rows):
                 if crash:
                     break
@@ -223,17 +233,18 @@ class SpecDoor(pygame.sprite.Sprite):
                     
                     
                     y_crash = self.rect.y-16- PLAYER_SPEED -(self.r * 16)                 
-                    x_crash = self.rect.x +((self.c-self.new_start_x)*16)
+                    x_crash = self.rect.x +((self.c-self.new_start_x)*16) 
                     if crash:
                         break
                     #print((x_crash,y_crash))
+                    
                     for wall in self.game.wall_list:
                         if crash:
                             break
                         
                         temp_modifier = 0
                         if wall[0]%16 != 0:
-                            if (wall[0]-2)%16 == 0:
+                            if (wall[0]-PLAYER_SPEED)%16 == 0:
                                 temp_modifier = PLAYER_SPEED
                             else:
                                 temp_modifier = -PLAYER_SPEED
@@ -263,7 +274,7 @@ class SpecDoor(pygame.sprite.Sprite):
                             
                             temp_modifier = 0
                             if wall[0]%16 != 0:
-                                if (wall[0]-2)%16 == 0:
+                                if (wall[0]-PLAYER_SPEED)%16 == 0:
                                     temp_modifier = PLAYER_SPEED
                                 else:
                                     temp_modifier = -PLAYER_SPEED
