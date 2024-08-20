@@ -22,6 +22,8 @@ class Prop(pygame.sprite.Sprite):
         self.groups = self.game.all_sprites, self.game.props
         pygame.sprite.Sprite.__init__(self, self.groups)
         
+        self.i = x
+        self.j = y
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         

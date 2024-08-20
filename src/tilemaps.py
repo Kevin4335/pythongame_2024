@@ -57,3 +57,193 @@ tilemap1= [
     '    B.B....B...B...B          ',
     '    BBBBBBBBBBBBBBBB          ',
 ]
+
+
+
+room0=[
+    'BBBB^BBBB',
+    'B.......B',
+    '<.......>',
+    'B...P...B',
+    'B.......B',
+    'BBBBvBBBB'
+]
+
+roomD1=[
+    '    B?B      ',
+    '    B.B      ',
+    '    B.B      ',
+    '    B.B      ',
+    '    B.B      ',
+    '    B.B      ',
+    '    B.B      ',
+    'BBBBB.BBBBBBB',
+    'Bccc...D....B',
+    'B......B....B',
+    'B..BDBBBBBBBB',
+    'B..B........B',
+    'BBBBBBBBBvBBB'
+]
+
+roomD2=[
+    '    B?B      ',
+    '    B.B      ',
+    '    B.B      ',
+    '    B.B      ',
+    '    B.B      ',
+    '    B.B      ',
+    '    B.B      ',
+    'BBBBB.BBBBBBB',
+    'B...........B',
+    '<.c...c.....>',
+    'B...c.......B',
+    'B...........B',
+    'BBBBBBBBBvBBB'
+]
+roomD3=[
+    'B?B          ',
+    'B.B          ',
+    'B.B          ',
+    'B.B          ',
+    'B.B          ',
+    'B.B          ',
+    'B.BBBBBBBBBBB',
+    'B.........e.B',
+    '<.c...c.....B',
+    'B...c.......B',
+    'B...........B',
+    'BBBBBBBBBvBBB'
+]
+
+roomR1=[
+    '     BBBBB^BBBBBBB',
+    '     B...........B',
+    '     B.c...c.....B',
+    '     B...c.......B',
+    '     B...........B',
+    '     BBBBBBBBB.BBB',
+    'BBBBBB...........B',
+    '?................B',
+    'BBBBBB...........B',
+    '     B...........B',
+    '     B...........B',
+    '     B...........B',
+    '     BBBBBBBBBvBBB',
+    
+]
+
+roomR2=[
+    
+    '     BBBBBBBBBBBBB',
+    '     B...........B',
+    '     B.BBBBBBBBB.B',
+    'BBBBBB.B.......B.B',
+    '?......B.....B.B.>',
+    'BBBBBBBBBBBBBB.B.B',
+    '     B.........B.B',
+    '     B.BBBBBBBBB.B',
+    '     B...........B',
+    '     BBBBBBBBBBBBB',
+    
+]
+
+roomR3=[
+
+    '         BBBBBBBBBBBBB',
+    '         B...........B',
+    'BBBBBBBBBB......c....B',
+    '?....................>',
+    'BBBBBBBBBB....c......B',
+    '         B...........B',
+    '         BBBBBBBBBBBBB',
+
+    
+]
+
+
+roomL1 =[
+    'BBBBB^BBBBBBB',
+    'B...........B',
+    'B.c...c.....B',
+    'B...c...e...B',
+    'B...........B',
+    'BBBBBBBBB.BBBBBBBBBBBB',
+    'B....B......D........?',
+    'B....BBBBBDBBBBBBBBBBB',
+    'B...........B',
+    'B...........B',
+    'B....c....c.B',
+    'B...........B',
+    'BBBBvBBBBBBBB',
+]
+
+roomL2 =[
+    
+    'BBBBBBBBBBBBB',
+    'B...........B',
+    'BBBBBBBBBDBBBBBBBBBBB',
+    '<...................?',
+    'B...........BBBBBBBBB',
+    'B...........B',
+    'BBBBBBBBBBBBB',
+    
+]
+
+roomL3 =[
+    
+    'BBBBBBBBBBBBB',
+    'B...cccccc..B',
+    'BBDBBBBBBDBBBBBBBBBBB',
+    '<....B..............?',
+    'B....B......BBBBBBBBB',
+    'B....B......B',
+    'BBBvBBBBBBBBB',
+    
+]
+
+roomU1 = [
+    'BBBBB^BBBBBBB',
+    'Bc.c...D....B',
+    '<......B....>',
+    'B..BDBBBBBBBB',
+    'B..B........B',
+    'BBBB.BBBBBBBB',
+    '   B.B       ',
+    '   B.B       ',
+    '   B.B       ',
+    '   B.B       ',
+    '   B.B       ',
+    '   B?B       ',
+]
+
+
+roomU2 = [
+    'BBBBB^BBBBBBBBBBBB',
+    'Bccc...D...e.....B',
+    'B......B.........>',
+    'B..BDBBBBBBBBBBBBB',
+    'B..B........B     ',
+    'BBBB.BBBBDBBB     ',
+    '   B.B......B     ',
+    '   B.B..c...B     ',
+    '   B.BBBBBBBB     ',
+    '   B.B            ',
+    '   B.B            ',
+    '   B?B            ',
+]
+
+roomU3 = [
+    'BBBBBBBBBBBBBBBB^B',
+    'Bccc.......e.....B',
+    '<................B',
+    'B..e...........c.B',
+    'B...........c....B',
+    'BBBBBBBB.BBBBBBBBB',
+    '       B.B        ',
+    '       B.B        ',
+    '       B.B        ',
+    '       B.B        ',
+    '       B.B        ',
+    '       B.B        ',
+    '       B?B        ',
+]

@@ -19,6 +19,8 @@ class Spritesheet():
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
+        self.i = x
+        self.j = y
         self.game = game
         self._layer = PLAYER_LAYER
         self.groups = self.game.all_sprites, self.game.player
@@ -45,12 +47,18 @@ class Player(pygame.sprite.Sprite):
         
         self.last = pygame.time.get_ticks()
         self.damage_cooldown = 1000 
+        
+        #initial camera lock
+        for sprite in self.game.all_sprites:
+            sprite.rect.x = PLAYER_X + sprite.rect.x - self.x
+            sprite.rect.y = PLAYER_Y + sprite.rect.y - self.y
             
         
     def update(self):
         self.movement()
         
         self.animate()
+        
         self.collide_enemy()
         
         self.rect.x += self.x_change
@@ -101,6 +109,7 @@ class Player(pygame.sprite.Sprite):
                 if self.x_change > 0:
                     #camera lock
                     for sprite in self.game.all_sprites:
+                        
                         sprite.rect.x += PLAYER_SPEED
                     self.rect.x = hits[0].rect.left - self.rect.width
                 if self.x_change < 0:
@@ -210,6 +219,8 @@ class Player(pygame.sprite.Sprite):
                     
 class Wall(pygame.sprite.Sprite):
     def __init__(self, game, file, x, y):
+        self.i = x
+        self.j = y
         self.game = game 
         self._layer = BLOCK_LAYER
         self.groups = self.game.all_sprites, self.game.blocks
@@ -232,6 +243,8 @@ class Wall(pygame.sprite.Sprite):
             
 class Block(pygame.sprite.Sprite):
     def __init__(self, game, file, x, y):
+        self.i = x
+        self.j = y
         self.game = game 
         self._layer = BLOCK_LAYER
         self.groups = self.game.all_sprites, self.game.blocks
@@ -251,6 +264,8 @@ class Block(pygame.sprite.Sprite):
 
 class Door(pygame.sprite.Sprite):
     def __init__(self, game, file, x, y):
+        self.i = x
+        self.j = y
         self.game = game 
         self._layer = DOOR_LAYER
         self.groups = self.game.all_sprites, self.game.doors
@@ -288,6 +303,8 @@ class Door(pygame.sprite.Sprite):
         
 class Ground(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
+        self.i = x
+        self.j = y
         self.game = game 
         self._layer = GROUND_LAYER
         self.groups = self.game.all_sprites
@@ -323,6 +340,8 @@ class MenuGraphic(pygame.sprite.Sprite):
         
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
+        self.i = x
+        self.j = y
         self.game = game
         self._layer = ENEMY_LAYER
         self.groups = self.game.all_sprites, self.game.enemies
@@ -498,7 +517,7 @@ class Enemy(pygame.sprite.Sprite):
                     
     def collide_blocks(self,direction):
         if direction == "x":
-            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False)
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False) or pygame.sprite.spritecollide(self, self.game.specdoors, False)
             if hits:
                 if self.x_change > 0:
                     self.facing = random.choice(['left', 'up', 'down'])
@@ -510,7 +529,7 @@ class Enemy(pygame.sprite.Sprite):
             
                     
         if direction == "y":
-            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False)
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False) or pygame.sprite.spritecollide(self, self.game.specdoors, False)
             if hits:
                 if self.y_change > 0:
                     self.facing = random.choice(['left','right', 'up'])

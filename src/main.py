@@ -6,7 +6,7 @@ from tilemaps import *
 from props import *
 import os
 from menu import *
-
+from proc_gen import *
 dirname = os.path.dirname(__file__)
 
 
@@ -16,7 +16,7 @@ class Game:
 
         mixer.init()
         mixer.music.load(os.path.join(
-            dirname, "../resources/swamptheme1var.mp3"))
+            dirname, "../resources/mossy-sewer.mp3"))
         self.blood_sound = pygame.mixer.Sound(
             os.path.join(dirname, "../resources/blood_sound.wav"))
         self.click_sound = pygame.mixer.Sound(
@@ -34,7 +34,7 @@ class Game:
         self.ui_hover.set_volume(0.02)
         self.door_open.set_volume(0.1)
         self.coin_sound.set_volume(0.05)
-        mixer.music.set_volume(0.07)
+        mixer.music.set_volume(0.05)
         mixer.music.play(loops=-1)
 
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -66,6 +66,8 @@ class Game:
         # self.terrain_spritesheet = Spritesheet('images/Terrain.png)
 
     def createTilemap(self, tilemap):
+        
+                    
         for i, row in enumerate(tilemap):
             for j, column in enumerate(row):
                 if column == "B":
@@ -76,9 +78,7 @@ class Game:
                 if column == 'D':
                     Ground(self, j, i)
                     Door(self, os.path.join(dirname, '../images/Door.png'), j, i)
-                if column == "P":
-                    Player(self, j, i)
-                    Ground(self, j, i)
+                
                 if column == '.':
                     Ground(self, j, i)
                 if column == 'e':
@@ -88,6 +88,34 @@ class Game:
                     Prop(self, os.path.join(
                         dirname, '../images/coins.png'), j, i, 'chest')
                     Ground(self, j, i)
+                    
+                if column == "P":
+                    Ground(self, j, i)
+                    #Player(self, j, i)
+                if column == "^":
+                    Ground(self, j, i)
+                    SpecDoor(self,os.path.join(dirname, '../images/Door.png'), j, i, "up")
+                    #Player(self, j, i)
+                if column == "v":
+                    Ground(self, j, i)
+                    SpecDoor(self,os.path.join(dirname, '../images/Door.png'), j, i, "down")
+                    #Player(self, j, i)
+                if column == "<":
+                    Ground(self, j, i)
+                    SpecDoor(self,os.path.join(dirname, '../images/Door.png'), j, i, "left")
+                    #Player(self, j, i)
+                if column == ">":
+                    Ground(self, j, i)
+                    SpecDoor(self,os.path.join(dirname, '../images/Door.png'), j, i,"right")
+                    #Player(self, j, i)
+                if column == "?":
+                    Ground(self, j, i)
+        for i, row in enumerate(tilemap):
+            for j, column in enumerate(row):
+                
+                if column == "P":
+                    Player(self, j, i)
+        
 
     def new(self):
         # new game starts
@@ -100,8 +128,9 @@ class Game:
         self.doors = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
         self.props = pygame.sprite.LayeredUpdates()
+        self.specdoors = pygame.sprite.LayeredUpdates()
 
-        self.createTilemap(tilemap2)
+        self.createTilemap(room0)
         self.menu = Menu(self)
         self.score = 0
         self.health = 5
