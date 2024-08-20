@@ -40,9 +40,9 @@ class SpecDoor(pygame.sprite.Sprite):
         
     def activate(self):
         if self.activated == 0:
-            
             for wall in self.game.walls:
                 wall.pseudoUpdate()
+            
             self.create_room()
         
     
@@ -196,18 +196,19 @@ class SpecDoor(pygame.sprite.Sprite):
                                 temp_modifier = PLAYER_SPEED
                             else:
                                 temp_modifier = -PLAYER_SPEED
-                        if wall == (x_crash, y_crash + temp_modifier) :
+                        if wall == (x_crash+ temp_modifier, y_crash ) :
                             self.room = plugL
                             
                             
                             crash = True
                             break
         if self.type == "right":
+            print(self.game.wall_list)
             for self.r in range(self.rows):
                 if crash:
                     break
                 for self.c in range(self.cols):
-                    x_crash = self.rect.x+16 +PLAYER_SPEED +(self.c * 16)               
+                    x_crash = self.rect.x+16 +PLAYER_SPEED+(self.c * 16)               
                     y_crash = self.rect.y +((self.r-self.new_start_y)*16)
                     if crash:
                         break
@@ -223,7 +224,7 @@ class SpecDoor(pygame.sprite.Sprite):
                             else:
                                 temp_modifier = -PLAYER_SPEED
                                 
-                        if wall == (x_crash, y_crash + temp_modifier) :
+                        if wall == (x_crash+ temp_modifier, y_crash ) :
                             self.room = plugR
                             
                             crash = True
@@ -235,7 +236,7 @@ class SpecDoor(pygame.sprite.Sprite):
                 for self.c in range(self.cols):
                     
                     
-                    y_crash = self.rect.y-16- PLAYER_SPEED -(self.r * 16)                 
+                    y_crash = self.rect.y-16 -(self.r * 16)                 
                     x_crash = self.rect.x +((self.c-self.new_start_x)*16) 
                     if crash:
                         break
@@ -247,11 +248,11 @@ class SpecDoor(pygame.sprite.Sprite):
                         
                         temp_modifier = 0
                         if wall[0]%16 != 0:
-                            if (wall[0]-PLAYER_SPEED)%16 == 0:
+                            if (wall[1]-PLAYER_SPEED)%16 == 0:
                                 temp_modifier = PLAYER_SPEED
                             else:
                                 temp_modifier = -PLAYER_SPEED
-                        if wall == (x_crash + temp_modifier, y_crash) :
+                        if wall == (x_crash , y_crash+ temp_modifier) :
                             self.room = plugU
                             
                             
@@ -276,12 +277,12 @@ class SpecDoor(pygame.sprite.Sprite):
                                 break
                             
                             temp_modifier = 0
-                            if wall[0]%16 != 0:
-                                if (wall[0]-PLAYER_SPEED)%16 == 0:
+                            if wall[1]%16 != 0:
+                                if (wall[1]-PLAYER_SPEED)%16 == 0:
                                     temp_modifier = PLAYER_SPEED
                                 else:
                                     temp_modifier = -PLAYER_SPEED
-                            if wall == (x_crash + temp_modifier, y_crash) :
+                            if wall == (x_crash, y_crash + temp_modifier) :
                                 self.room = plugD
                                 
                                 crash = True
