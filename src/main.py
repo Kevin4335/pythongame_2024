@@ -138,11 +138,15 @@ class Game:
         self.props = pygame.sprite.LayeredUpdates()
         self.specdoors = pygame.sprite.LayeredUpdates()
         self.walls  = pygame.sprite.LayeredUpdates()
-
+        self.wall_num = 0
+        self.wall_list = []
         self.createTilemap(room0)
         self.menu = Menu(self)
         self.score = 0
         self.health = 5
+        
+        
+        
         # MenuGraphic(self)
 
     def events(self):

@@ -35,8 +35,10 @@ class SpecDoor(pygame.sprite.Sprite):
         
         self.opened = 0
         self.activated = 0
-        
-        self.room = room0        
+        self.rows = 0
+        self.cols = 0
+        self.room = room0      
+        self.room_size = 0  
         
     def activate(self):
         if self.activated == 0:
@@ -50,13 +52,13 @@ class SpecDoor(pygame.sprite.Sprite):
     
     def create_room(self):
         if self.type == "right":
-            self.room = random.choice([right_maps.a])
+            self.room = random.choice([right_maps.a, right_maps.c])
         elif self.type == "down":
-            self.room = random.choice([down_maps.a, down_maps.b])
+            self.room = random.choice([down_maps.a, down_maps.b, down_maps.c])
         elif self.type == "left":
-            self.room = random.choice([left_maps.a])
+            self.room = random.choice([left_maps.a, left_maps.c])
         elif self.type == "up":
-            self.room = random.choice([up_maps.a])
+            self.room = random.choice([up_maps.a, up_maps.c])
         self.new_start_x =-1
         self.new_start_y = -1
         
@@ -78,8 +80,7 @@ class SpecDoor(pygame.sprite.Sprite):
         
                         
     def createTiles(self):
-        self.rows = 0
-        self.cols = 0
+        
         for i, row in enumerate(self.room):
             self.rows = self.rows +1
             for j, column in enumerate(row):
@@ -99,6 +100,8 @@ class SpecDoor(pygame.sprite.Sprite):
                 if column == "?":
                     self.new_start_x = j
                     self.new_start_y = i
+                if column == ".":
+                    self.room_size = self.room_size +1
             
         self.tile_generate()
         
@@ -119,6 +122,8 @@ class SpecDoor(pygame.sprite.Sprite):
             j_modifier = (self.rect.x/16) - self.new_start_x
             i_modifier = (self.rect.y/16) - self.new_start_y
         
+        
+        num_loots = random.randint(3, 15)
         for i, row in enumerate(self.room):
                 for j, column in enumerate(row):                                                                               
                     if column == "B":
@@ -131,21 +136,35 @@ class SpecDoor(pygame.sprite.Sprite):
                         Door(self.game, os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier )
                     
                     if column == '.':
+                        
                         Ground(self.game, j + j_modifier, i + i_modifier )
+                        
+                        
+                        loot_gen = False
+                        loot_gen = random.choices(
+                                population=[True, False],
+                                weights=[(num_loots/self.room_size)*100.0,(1-(num_loots/self.room_size))*100.0],
+                                k=1
+                            )
+                        if loot_gen[0] == True:
+                            if num_loots>0:
+                                Prop(self.game, os.path.join(
+                                    dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'coin')
+                                num_loots = num_loots -1
                     if column == 'e':
                         Enemy(self.game, j + j_modifier, i + i_modifier )
                         Ground(self.game, j + j_modifier, i + i_modifier )
                     if column == 'c':
                         Prop(self.game, os.path.join(
-                            dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'chest')
+                            dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'coin')
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         
                     if column == "P":
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         #Player(self, j, i)
                     if column =="■":
-                        Ground(self, j + j_modifier, i + i_modifier)
-                        Block(self, os.path.join(dirname, '../images/box.png'), j + j_modifier, i + i_modifier)
+                        Ground(self.game, j + j_modifier, i + i_modifier)
+                        Block(self.game, os.path.join(dirname, '../images/box.png'), j + j_modifier, i + i_modifier)
                     if column == "^":
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier , 'up')
