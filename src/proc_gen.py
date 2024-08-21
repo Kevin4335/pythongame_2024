@@ -110,7 +110,9 @@ class SpecDoor(pygame.sprite.Sprite):
         self.tile_generate()
         
     def tile_generate(self):
-        self.game.rooms = self.game.rooms + 1
+        if self.room != plugD and self.room != plugL and self.room != plugR and self.room != plugU:
+            
+            self.game.rooms = self.game.rooms + 1
         j_modifier = 0
         i_modifier = 0
         
