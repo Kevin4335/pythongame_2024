@@ -12,7 +12,7 @@ class Menu():
         game.screen.blit(self.menu_background, (0,GAME_HEIGHT))
         
     def score_counter(self, game):
-        self.text = game.font2.render("Exp: " + str(game.score), True, TITLE_TEXT)
+        self.text = game.font2.render("$$$: " + str(game.score), True, TITLE_TEXT)
         self.text_rect = self.text.get_rect(topleft=(24, GAME_HEIGHT + 24))
 
         # self.screen.blit(self.game_over_png, (0, 0))
