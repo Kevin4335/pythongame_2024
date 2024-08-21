@@ -27,13 +27,22 @@ class Game:
             os.path.join(dirname, "../resources/bloop.mp3"))
         self.door_open = pygame.mixer.Sound(
             os.path.join(dirname, "../resources/open-doors.mp3"))
+        
+       
         self.coin_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/coins.mp3"))
+        
+        self.swing_sound = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/whoosh.mp3"))
+        self.hit_sound = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/hit.mp3"))
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         self.prop_sound.set_volume(0.1)
         self.ui_hover.set_volume(0.02)
         self.door_open.set_volume(0.1)
         self.coin_sound.set_volume(0.05)
+        self.swing_sound.set_volume(0.03)
+        self.hit_sound.set_volume(0.05)
         mixer.music.set_volume(0.05)
         mixer.music.play(loops=-1)
 
@@ -58,6 +67,8 @@ class Game:
             os.path.join(dirname, '../images/Enemy1.png'))
         self.damaged = Spritesheet(
             os.path.join(dirname, '../images/damaged.png'))
+        
+        self.attack_spritesheet = Spritesheet(os.path.join(dirname, '../images/attacks.png'))
         
         self.Wall_spritesheet = pygame.image.load(os.path.join(dirname, '../images/bricks.png'))
 
@@ -122,7 +133,7 @@ class Game:
             for j, column in enumerate(row):
                 
                 if column == "P":
-                    Player(self, j, i)
+                    self.real_player = Player(self, j, i)
         
 
     def new(self):
@@ -138,6 +149,7 @@ class Game:
         self.props = pygame.sprite.LayeredUpdates()
         self.specdoors = pygame.sprite.LayeredUpdates()
         self.walls  = pygame.sprite.LayeredUpdates()
+        self.attacks = pygame.sprite.LayeredUpdates()
         self.wall_num = 0
         self.wall_list = []
         self.createTilemap(room0)
@@ -155,6 +167,19 @@ class Game:
             if event.type == pygame.QUIT:
                 self.playing = False
                 self.running = False
+                
+            if event.type == pygame.KEYDOWN:
+                
+                if event.key == pygame.K_SPACE:
+                    pygame.mixer.Sound.play(self.swing_sound)
+                    if self.real_player.facing == 'up':
+                        Attack(self,self.real_player.rect.x, self.real_player.rect.y - TILESIZE)
+                    if self.real_player.facing == 'down':
+                        Attack(self,self.real_player.rect.x, self.real_player.rect.y + TILESIZE)
+                    if self.real_player.facing == 'left':
+                        Attack(self,self.real_player.rect.x- TILESIZE, self.real_player.rect.y )
+                    if self.real_player.facing == 'right':
+                        Attack(self,self.real_player.rect.x+ TILESIZE, self.real_player.rect.y )
 
     def update(self):
         # gameloop updates
