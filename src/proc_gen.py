@@ -67,8 +67,8 @@ class SpecDoor(pygame.sprite.Sprite):
     def update(self):
         
         collide_non_player = pygame.sprite.spritecollide(self, self.game.enemies, False)
-        if(collide_non_player and self.activated ==0):
-            collide_non_player[0].kill()
+        # if(collide_non_player and self.activated ==0):
+        #     collide_non_player[0].kill()
         
         if(pygame.sprite.spritecollide(self, self.game.player, False) or (collide_non_player and self.activated ==1) ):
             self.image = self.Door_spritesheet.get_sprite(32,0,self.width,self.height)

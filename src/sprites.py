@@ -541,9 +541,19 @@ class Enemy(pygame.sprite.Sprite):
                     self.animation_loop = 1
                     
     def collide_blocks(self,direction):
+        spec_door_hit  = pygame.sprite.spritecollide(self, self.game.specdoors, False)
+        collide_spec_door = []
+        if spec_door_hit:
+            
+            if spec_door_hit[0].activated == False:
+                collide_spec_door = spec_door_hit
+                
         if direction == "x":
-            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) 
+            
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or collide_spec_door
+            
             if hits:
+                
                 if self.x_change > 0:
                     self.facing = random.choice(['left', 'up', 'down'])
                     
@@ -554,7 +564,8 @@ class Enemy(pygame.sprite.Sprite):
             
                     
         if direction == "y":
-            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) 
+            
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or collide_spec_door
             if hits:
                 if self.y_change > 0:
                     self.facing = random.choice(['left','right', 'up'])
