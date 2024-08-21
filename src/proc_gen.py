@@ -66,7 +66,11 @@ class SpecDoor(pygame.sprite.Sprite):
     
     def update(self):
         
-        if(pygame.sprite.spritecollide(self, self.game.player, False)):
+        collide_non_player = pygame.sprite.spritecollide(self, self.game.enemies, False)
+        if(collide_non_player and self.activated ==0):
+            collide_non_player[0].kill()
+        
+        if(pygame.sprite.spritecollide(self, self.game.player, False) or (collide_non_player and self.activated ==1) ):
             self.image = self.Door_spritesheet.get_sprite(32,0,self.width,self.height)
             if self.opened == 0:
                 pygame.mixer.Sound.play(self.game.door_open)
@@ -106,6 +110,7 @@ class SpecDoor(pygame.sprite.Sprite):
         self.tile_generate()
         
     def tile_generate(self):
+        self.game.rooms = self.game.rooms + 1
         j_modifier = 0
         i_modifier = 0
         
@@ -124,6 +129,7 @@ class SpecDoor(pygame.sprite.Sprite):
         
         
         num_loots = random.randint(3, 15)
+        num_enemies = random.randint(1,5)
         for i, row in enumerate(self.room):
                 for j, column in enumerate(row):                                                                               
                     if column == "B":
@@ -146,14 +152,25 @@ class SpecDoor(pygame.sprite.Sprite):
                                 weights=[(num_loots/self.room_size)*100.0,(1-(num_loots/self.room_size))*100.0],
                                 k=1
                             )
+                        enemy_gen = False
+                        enemy_gen = random.choices(
+                                population=[True, False],
+                                weights=[(num_enemies/self.room_size)*100.0,(1-(num_enemies/self.room_size))*100.0],
+                                k=1
+                            )
                         if loot_gen[0] == True:
                             if num_loots>0:
                                 Prop(self.game, os.path.join(
                                     dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'coin')
                                 num_loots = num_loots -1
+                        elif enemy_gen[0] == True:
+                            if num_enemies>0:
+                                Enemy(self.game, j + j_modifier, i + i_modifier )
+                                num_enemies = num_enemies -1
                     if column == 'e':
-                        Enemy(self.game, j + j_modifier, i + i_modifier )
+                        
                         Ground(self.game, j + j_modifier, i + i_modifier )
+                        Enemy(self.game, j + j_modifier, i + i_modifier )
                     if column == 'c':
                         Prop(self.game, os.path.join(
                             dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'coin')

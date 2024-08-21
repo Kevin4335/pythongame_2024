@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         self._layer = PLAYER_LAYER
         self.groups = self.game.all_sprites, self.game.player
         pygame.sprite.Sprite.__init__(self, self.groups)
-        
+        self.AD = 1
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.width = TILESIZE
@@ -306,7 +306,7 @@ class Door(pygame.sprite.Sprite):
     def update(self):
         
         
-        if(pygame.sprite.spritecollide(self, self.game.player, False)):
+        if(pygame.sprite.spritecollide(self, self.game.player, False) or pygame.sprite.spritecollide(self, self.game.enemies, False)):
             self.image = self.Door_spritesheet.get_sprite(32,0,self.width,self.height)
             if self.opened == 0:
                 pygame.mixer.Sound.play(self.game.door_open)
@@ -425,15 +425,17 @@ class Enemy(pygame.sprite.Sprite):
         self.x_change = 0
         self.y_change = 0
         
-        if self.health <=0:
-            self.kill()
+        self.die()
          
     def distance_calc(self):
         self.relative_x = self.rect.x - PLAYER_X
         self.relative_y = self.rect.y - PLAYER_Y
         self.distance_to_player = (math.sqrt((self.relative_x)**2+(self.relative_y)**2))
         
-        
+    def die(self):
+        if self.health <=0:
+            pygame.mixer.Sound.play(self.game.death_sound)
+            self.kill()
     def movement_active(self):
         
         
@@ -540,7 +542,7 @@ class Enemy(pygame.sprite.Sprite):
                     
     def collide_blocks(self,direction):
         if direction == "x":
-            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False) or pygame.sprite.spritecollide(self, self.game.specdoors, False)
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) 
             if hits:
                 if self.x_change > 0:
                     self.facing = random.choice(['left', 'up', 'down'])
@@ -552,7 +554,7 @@ class Enemy(pygame.sprite.Sprite):
             
                     
         if direction == "y":
-            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or pygame.sprite.spritecollide(self, self.game.doors, False) or pygame.sprite.spritecollide(self, self.game.specdoors, False)
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) 
             if hits:
                 if self.y_change > 0:
                     self.facing = random.choice(['left','right', 'up'])
@@ -661,7 +663,7 @@ class Attack(pygame.sprite.Sprite):
         enemy_hit = pygame.sprite.spritecollide(self, self.game.enemies, False)
         if enemy_hit and (self.hit == False):
             self.hit = True
-            enemy_hit[0].health =enemy_hit[0].health-1
+            enemy_hit[0].health =enemy_hit[0].health-self.game.real_player.AD
             pygame.mixer.Sound.play(self.game.hit_sound)
     
     def animate(self):
@@ -671,28 +673,28 @@ class Attack(pygame.sprite.Sprite):
         
         if direction == 'up':
             self.image=self.up_animations[math.floor(self.animation_loop)]
-            self.animation_loop+=0.8
+            self.animation_loop+=1
             
             if self.animation_loop >=5:
                 self.kill()
                 
         if direction == 'down':
             self.image=self.down_animations[math.floor(self.animation_loop)]
-            self.animation_loop+=0.8
+            self.animation_loop+=1
             
             if self.animation_loop >=5:
                 self.kill()
         
         if direction == 'left':
             self.image=self.left_animations[math.floor(self.animation_loop)]
-            self.animation_loop+=0.8
+            self.animation_loop+=1
             
             if self.animation_loop >=5:
                 self.kill()
                 
         if direction == 'right':
             self.image=self.right_animations[math.floor(self.animation_loop)]
-            self.animation_loop+=0.8
+            self.animation_loop+=1
             
             if self.animation_loop >=5:
                 self.kill()

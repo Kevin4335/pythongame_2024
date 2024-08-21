@@ -35,6 +35,8 @@ class Game:
             os.path.join(dirname, "../resources/whoosh.mp3"))
         self.hit_sound = pygame.mixer.Sound(
             os.path.join(dirname, "../resources/hit.mp3"))
+        self.death_sound = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/death.mp3"))
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         self.prop_sound.set_volume(0.1)
@@ -43,6 +45,7 @@ class Game:
         self.coin_sound.set_volume(0.05)
         self.swing_sound.set_volume(0.03)
         self.hit_sound.set_volume(0.05)
+        self.death_sound.set_volume(0.05)
         mixer.music.set_volume(0.05)
         mixer.music.play(loops=-1)
 
@@ -77,6 +80,8 @@ class Game:
         # self.game_over_png = pygame.image.load('images/hilarious.png')
         self.wall_num = 0
         self.wall_list = []
+        
+        self.rooms = 0
     
         # self.terrain_spritesheet = Spritesheet('images/Terrain.png)
 
@@ -156,7 +161,7 @@ class Game:
         self.menu = Menu(self)
         self.score = 0
         self.health = 5
-        
+        self.rooms = 0
         
         
         # MenuGraphic(self)
