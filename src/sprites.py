@@ -365,7 +365,7 @@ class Enemy(pygame.sprite.Sprite):
         self.groups = self.game.all_sprites, self.game.enemies
         pygame.sprite.Sprite.__init__(self, self.groups)
         
-    
+        self.health = 3
 
         self.x = x * TILESIZE
         self.y = y * TILESIZE
@@ -424,6 +424,9 @@ class Enemy(pygame.sprite.Sprite):
         
         self.x_change = 0
         self.y_change = 0
+        
+        if self.health <=0:
+            self.kill()
          
     def distance_calc(self):
         self.relative_x = self.rect.x - PLAYER_X
@@ -618,8 +621,7 @@ class Attack(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
         
-        
-        
+        self.hit = False
         self.right_animations = [
             self.game.attack_spritesheet.get_sprite(0,32,self.width,self.height),
             self.game.attack_spritesheet.get_sprite(16,32,self.width,self.height),
@@ -654,9 +656,12 @@ class Attack(pygame.sprite.Sprite):
         self.collide()
         
     def collide(self):
-    
-
-        if pygame.sprite.spritecollide(self, self.game.enemies, True):
+        
+        
+        enemy_hit = pygame.sprite.spritecollide(self, self.game.enemies, False)
+        if enemy_hit and (self.hit == False):
+            self.hit = True
+            enemy_hit[0].health =enemy_hit[0].health-1
             pygame.mixer.Sound.play(self.game.hit_sound)
     
     def animate(self):
