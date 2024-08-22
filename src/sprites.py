@@ -676,6 +676,12 @@ class Attack(pygame.sprite.Sprite):
             self.hit = True
             enemy_hit[0].health =enemy_hit[0].health-self.game.real_player.AD
             pygame.mixer.Sound.play(self.game.hit_sound)
+            
+        box_hit = pygame.sprite.spritecollide(self, self.game.destructables, False)
+        if box_hit and (self.hit == False):
+            self.hit = True
+            box_hit[0].health =box_hit[0].health-self.game.real_player.AD
+            pygame.mixer.Sound.play(self.game.wood_attack)
     
     def animate(self):
         direction = self.game.real_player.facing

@@ -37,6 +37,14 @@ class Game:
             os.path.join(dirname, "../resources/hit.mp3"))
         self.death_sound = pygame.mixer.Sound(
             os.path.join(dirname, "../resources/death.mp3"))
+        self.box_open = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/open_break.mp3"))
+        self.wood_attack = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/wood_attack.mp3"))
+        self.equip_sound = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/equip.mp3"))
+        self.drink_sound = pygame.mixer.Sound(
+            os.path.join(dirname, "../resources/drink.mp3"))
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         self.prop_sound.set_volume(0.1)
@@ -46,6 +54,10 @@ class Game:
         self.swing_sound.set_volume(0.03)
         self.hit_sound.set_volume(0.05)
         self.death_sound.set_volume(0.05)
+        self.box_open.set_volume(0.08)
+        self.wood_attack.set_volume(0.1)
+        self.drink_sound.set_volume(0.1)
+        self.equip_sound.set_volume(0.05)
         mixer.music.set_volume(0.05)
         mixer.music.play(loops=-1)
 
@@ -155,6 +167,9 @@ class Game:
         self.specdoors = pygame.sprite.LayeredUpdates()
         self.walls  = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
+        
+        self.destructables = pygame.sprite.LayeredUpdates()
+        
         self.wall_num = 0
         self.wall_list = []
         self.createTilemap(room0)

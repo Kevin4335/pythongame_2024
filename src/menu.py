@@ -20,7 +20,9 @@ class Menu():
 
     def health_counter(self, game):
         health_text = ""
-        if game.health == 5 :
+        if game.health >5:
+            health_text = "AMAZING"
+        elif game.health == 5 :
             health_text = "great"
         elif game.health == 4:
             health_text = "okay"
@@ -32,6 +34,7 @@ class Menu():
             health_text = "terrible"
         else:
             health_text = "DEAD"
+        
             
         self.text = game.font2.render("You feel " + str(health_text), True, TITLE_TEXT)
         self.text_rect = self.text.get_rect(topleft=(24, GAME_HEIGHT + 48))
