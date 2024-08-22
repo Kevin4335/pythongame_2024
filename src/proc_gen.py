@@ -179,7 +179,6 @@ class SpecDoor(pygame.sprite.Sprite):
                                     weights=[80,20],
                                     k=1
                                 )
-                                print(enemy_type_gen)
                                 if enemy_type_gen[0] == "1":
                                     
                                     Enemy(self.game, j + j_modifier, i + i_modifier )
