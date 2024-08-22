@@ -90,21 +90,21 @@ class Enemy(pygame.sprite.Sprite):
     def movement_active(self):
         
         
-        if abs(self.relative_x) >= abs(self.relative_y):
-            if self.relative_x <0:
-                self.facing = 'right'
-                self.movement_forward()
-            elif self.relative_x >0:
-                self.facing = 'left'
-                self.movement_forward()
         
-        if abs(self.relative_y) >= abs(self.relative_x):           
-            if self.relative_y <0:
-                self.facing = 'down'
-                self.movement_forward()
-            elif self.relative_y >0:
-                self.facing = 'up'
-                self.movement_forward()
+        if self.relative_x <0:
+            self.facing = 'right'
+            self.movement_forward()
+        elif self.relative_x >0:
+            self.facing = 'left'
+            self.movement_forward()
+    
+                
+        if self.relative_y <0:
+            self.facing = 'down'
+            self.movement_forward()
+        elif self.relative_y >0:
+            self.facing = 'up'
+            self.movement_forward()
 
     def movement_forward(self):
         if self.facing == 'left':
@@ -451,7 +451,7 @@ class Bullet(pygame.sprite.Sprite):
         self.y_change = 0
         self.animation_loop = 1
         self.movement_loop = 0
-        self.self_speed = ENEMY_SPEED
+        self.self_speed = ENEMY_SPEED + 1
         self.bullet_spritesheet = Spritesheet(
             os.path.join(dirname, '../images/bullet.png'))
         self.image = self.bullet_spritesheet.get_sprite(0,0,self.width,self.height)
@@ -464,6 +464,9 @@ class Bullet(pygame.sprite.Sprite):
         self.distance_to_player =0
         self.relative_x = 0
         self.relative_y = 0
+        self.last = pygame.time.get_ticks()
+        self.death_timer = 2000 
+        
         
     def update(self):
         self.distance_calc()
@@ -477,10 +480,15 @@ class Bullet(pygame.sprite.Sprite):
         self.y_change = 0
         if self.health <=0:
             self.kill()
+            
+        self.now = pygame.time.get_ticks()
+        if self.now - self.last >= self.death_timer:
+            self.last = self.now
+            self.kill()
          
     def distance_calc(self):
-        self.relative_x = self.rect.x - PLAYER_X - 4
-        self.relative_y = self.rect.y - PLAYER_Y - 4
+        self.relative_x = self.rect.x - PLAYER_X - random.choice([-60,-28,-12,-4,4,8,16,32,64])
+        self.relative_y = self.rect.y - PLAYER_Y - random.choice([-60,-28,-12,-4,4,8,16,32,64])
         self.distance_to_player = (math.sqrt((self.relative_x)**2+(self.relative_y)**2))
         
     def movement_active(self):

@@ -174,7 +174,18 @@ class SpecDoor(pygame.sprite.Sprite):
                                 num_loots = num_loots -1
                         elif enemy_gen[0] == True:
                             if num_enemies>0:
-                                EnemyMage(self.game, j + j_modifier, i + i_modifier )
+                                enemy_type_gen = random.choices(
+                                    population=["1", "2"],
+                                    weights=[80,20],
+                                    k=1
+                                )
+                                print(enemy_type_gen)
+                                if enemy_type_gen[0] == "1":
+                                    
+                                    Enemy(self.game, j + j_modifier, i + i_modifier )
+                                elif enemy_type_gen[0] == "2":
+                                    EnemyMage(self.game, j + j_modifier, i + i_modifier )
+                                    
                                 num_enemies = num_enemies -1
                         elif box_gen[0] == True:
                             if num_boxes>0:
@@ -183,7 +194,7 @@ class SpecDoor(pygame.sprite.Sprite):
                     if column == 'e':
                         
                         Ground(self.game, j + j_modifier, i + i_modifier )
-                        Enemy(self.game, j + j_modifier, i + i_modifier )
+                        #Enemy(self.game, j + j_modifier, i + i_modifier )
                     if column == 'c':
                         Prop(self.game, os.path.join(
                             dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'coin')
