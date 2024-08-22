@@ -479,8 +479,8 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
          
     def distance_calc(self):
-        self.relative_x = self.rect.x - PLAYER_X
-        self.relative_y = self.rect.y - PLAYER_Y
+        self.relative_x = self.rect.x - PLAYER_X - 4
+        self.relative_y = self.rect.y - PLAYER_Y - 4
         self.distance_to_player = (math.sqrt((self.relative_x)**2+(self.relative_y)**2))
         
     def movement_active(self):
