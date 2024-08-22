@@ -7,7 +7,9 @@ from props import *
 import os
 from menu import *
 from proc_gen import *
-dirname = os.path.dirname(__file__)
+
+from enemies import *
+
 
 
 class Game:
@@ -78,8 +80,7 @@ class Game:
             os.path.join(dirname, '../images/pxArt.png'))
         self.character_spritesheet = Spritesheet(
             os.path.join(dirname, '../images/Character.png'))
-        self.enemy_spritesheet = Spritesheet(
-            os.path.join(dirname, '../images/Enemy1.png'))
+        
         self.damaged = Spritesheet(
             os.path.join(dirname, '../images/damaged.png'))
         

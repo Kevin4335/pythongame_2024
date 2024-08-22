@@ -6,7 +6,7 @@ import os
 from tilemaps import *
 from sprites import *
 from props import *
-
+from enemies import *
 from maps import down_maps 
 from maps import left_maps
 from maps import right_maps
@@ -174,7 +174,7 @@ class SpecDoor(pygame.sprite.Sprite):
                                 num_loots = num_loots -1
                         elif enemy_gen[0] == True:
                             if num_enemies>0:
-                                Enemy(self.game, j + j_modifier, i + i_modifier )
+                                EnemyMage(self.game, j + j_modifier, i + i_modifier )
                                 num_enemies = num_enemies -1
                         elif box_gen[0] == True:
                             if num_boxes>0:
