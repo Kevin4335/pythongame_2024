@@ -22,10 +22,8 @@ class Prop(pygame.sprite.Sprite):
         self.groups = self.game.all_sprites, self.game.props
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.type = type
-        self.i = x
-        self.j = y
-        self.x = x * TILESIZE
-        self.y = y * TILESIZE
+        self.x = x
+        self.y = y 
         
         self.width = TILESIZE
         self.height = TILESIZE
@@ -87,7 +85,7 @@ class Box(pygame.sprite.Sprite):
             
             pygame.mixer.Sound.play(self.game.box_open)
             Prop(self.game, os.path.join(
-                dirname, '../images/potion_1.png'),(self.rect.x//16) ,self.rect.y//16 , '1Pot')
+                dirname, '../images/potion_1.png'),self.rect.x ,self.rect.y , '1Pot')
             self.kill()
             
         

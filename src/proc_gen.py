@@ -170,7 +170,7 @@ class SpecDoor(pygame.sprite.Sprite):
                         if loot_gen[0] == True:
                             if num_loots>0:
                                 Prop(self.game, os.path.join(
-                                    dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'coin')
+                                    dirname, '../images/coins.png'), (j + j_modifier)*16, (i + i_modifier)*16 , 'coin')
                                 num_loots = num_loots -1
                         elif enemy_gen[0] == True:
                             if num_enemies>0:
