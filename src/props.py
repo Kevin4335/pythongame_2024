@@ -110,21 +110,27 @@ class Pedestal(pygame.sprite.Sprite):
 
                      
 class Purchasable(pygame.sprite.Sprite):
-        def __init__(self, game, file, x, y):
+        def __init__(self, game, x, y, type ):
             self.i = x
             self.j = y
             self.game = game 
             self._layer = PROP_LAYER
             self.groups = self.game.all_sprites, self.game.props
             pygame.sprite.Sprite.__init__(self, self.groups)
-            
+            self.type = type
             self.x = x * TILESIZE
             self.y = y * TILESIZE
             
             self.width = TILESIZE
             self.height = TILESIZE
             
-            self.item = Spritesheet(file)
+            if self.type == "AD+":
+                self.file = os.path.join(
+                            dirname, '../images/damage_buff.png')
+            elif self.type == "P+":
+                self.file = os.path.join(
+                            dirname, '../images/potion_1.png')
+            self.item = Spritesheet(self.file)
             self.image = self.item.get_sprite(0,0,self.width,self.height)
                 
             self.rect = self.image.get_rect()
@@ -132,15 +138,25 @@ class Purchasable(pygame.sprite.Sprite):
             self.rect.y = self.y
         
         def update(self):
+            
             if(pygame.sprite.spritecollide(self, self.game.player, False)):
                     
-                    if self.game.score - 20 >=0:
-                        pygame.mixer.Sound.play(self.game.coin_sound)
-                        score_update(self.game, -20)
-                        self.game.real_player.AD += 2
-                        self.kill()
-                    else:
-                        self.game.money_warn = True
+                    if self.type == "AD+":
+                        if self.game.score - 20 >=0:
+                            pygame.mixer.Sound.play(self.game.coin_sound)
+                            score_update(self.game, -20)
+                            self.game.real_player.AD += 2
+                            self.kill()
+                        else:
+                            self.game.money_warn = True
+                    elif self.type == "P+":
+                        if self.game.score - 5 >=0:
+                            pygame.mixer.Sound.play(self.game.coin_sound)
+                            score_update(self.game, -5)
+                            self.game.health += 2
+                            self.kill()
+                        else:
+                            self.game.money_warn = True
         
             
             

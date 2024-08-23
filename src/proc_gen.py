@@ -207,9 +207,14 @@ class SpecDoor(pygame.sprite.Sprite):
                     if column == '$':
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         Pedestal(self.game, os.path.join(
-                            dirname, '../images/pedestal.png'), j + j_modifier, i + i_modifier)
-                        Purchasable(self.game, os.path.join(
-                            dirname, '../images/damage_buff.png'), j + j_modifier, i + i_modifier)
+                            dirname, '../images/pedestal.png'), j + j_modifier, i + i_modifier + 1)
+                        
+                        shop_gen = random.choices(
+                                    population=["AD+", "P+"],
+                                    weights=[50,50],
+                                    k=1
+                                )
+                        Purchasable(self.game, j + j_modifier, i + i_modifier, shop_gen[0])
                     if column == "P":
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         #Player(self, j, i)
