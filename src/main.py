@@ -93,7 +93,7 @@ class Game:
         self.Wall_spritesheet = pygame.image.load(os.path.join(dirname, '../images/bricks.png'))
 
         self.score = 0
-        self.health = 5
+        self.health = PLAYER_HEALTH
         # self.game_over_png = pygame.imawload('images/hilarious.png')
         self.wall_num = 0
         self.wall_list = []
@@ -184,7 +184,7 @@ class Game:
         self.createTilemap(room0)
         self.menu = Menu(self)
         self.score = 0
-        self.health = 5
+        self.health = PLAYER_HEALTH
         self.rooms = 0
         
         

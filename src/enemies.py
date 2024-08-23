@@ -825,3 +825,181 @@ class Explosion(pygame.sprite.Sprite):
             self.kill()
                 
 
+class BombBoss(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.i = x
+        self.j = y
+        self.game = game
+        self._layer = ENEMY_LAYER
+        self.groups = self.game.all_sprites, self.game.enemies
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        
+        self.health = 100
+
+        self.x = x * TILESIZE 
+        self.y = y * TILESIZE
+        self.width = TILESIZE *3
+        self.height = TILESIZE *3
+
+
+        self.x_change = 0
+        self.y_change = 0
+        self.animation_loop = 1
+        self.movement_loop = 0
+        self.self_speed = ENEMY_SPEED
+        self.enemy_spritesheet = Spritesheet(
+            os.path.join(dirname, '../images/BombBoss.png'))
+        self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
+
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+        
+        self.facing = random.choice(['left','right', 'up', 'down'])
+        self.max_travel = random.choice([32, 48, 64, 128])
+        
+        self.distance_to_player =0
+        self.relative_x = 0
+        self.relative_y = 0
+        
+        self.move = [self.enemy_spritesheet.get_sprite(0,0,self.width,self.height),
+                           self.enemy_spritesheet.get_sprite(48,0,self.width,self.height),
+                           self.enemy_spritesheet.get_sprite(96,0,self.width,self.height)]
+        self.last = pygame.time.get_ticks()
+        self.casting_cooldown = 2000 
+        
+    
+
+    def update(self):
+        self.distance_calc()
+        if self.distance_to_player <164:
+            self.spawnAts()
+              
+        self.movement_idle()
+        self.animate()
+        
+        self.rect.x += self.x_change
+        self.collide_blocks('x')
+        self.rect.y += self.y_change
+        self.collide_blocks('y')
+        
+        self.x_change = 0
+        self.y_change = 0
+        
+        self.die()
+         
+    def distance_calc(self):
+        self.relative_x = self.rect.x - PLAYER_X
+        self.relative_y = self.rect.y - PLAYER_Y
+        self.distance_to_player = (math.sqrt((self.relative_x)**2+(self.relative_y)**2))
+    
+    def spawnAts(self):
+        self.now = pygame.time.get_ticks()
+        if self.now - self.last >= self.casting_cooldown:
+            self.last = self.now
+            Bombguy(self.game, (self.rect.x // 16) + 1, (self.rect.y // 16) + 1 )
+    
+    def die(self):
+        if self.health <=0:
+            pygame.mixer.Sound.play(self.game.death_sound)
+            self.kill()
+    
+    
+    def movement_idle(self):
+        if self.facing == 'left':
+            self.x_change -= self.self_speed
+            self.movement_loop-=1
+            if self.movement_loop <= -self.max_travel:
+                self.facing = random.choice(['left','right', 'up', 'down'])
+                self.max_travel = random.choice([32, 48, 64, 128])
+        elif self.facing == 'right':
+            self.x_change += self.self_speed
+            self.movement_loop+=1
+            if self.movement_loop >= self.max_travel:
+                self.facing = random.choice(['left','right', 'up', 'down'])
+                self.max_travel = random.choice([32, 48, 64, 128])
+        elif self.facing == 'up':
+            self.y_change -= self.self_speed
+            self.movement_loop-=1
+            if self.movement_loop <= -self.max_travel:
+                self.facing = random.choice(['left','right', 'up', 'down'])
+                self.max_travel = random.choice([32, 48, 64, 128])
+        elif self.facing == 'down':
+            self.y_change += self.self_speed
+            self.movement_loop+=1
+            if self.movement_loop >= self.max_travel:
+                self.facing = random.choice(['left','right', 'up', 'down'])
+                self.max_travel = random.choice([32, 48, 64, 128])
+    
+    def animate(self):
+       
+        
+        if self.facing == "down":
+            if(self.y_change == 0):
+                self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
+            else:
+                self.image = self.move[math.floor(self.animation_loop)]
+                self.animation_loop += 0.05
+                if self.animation_loop>=3:
+                    self.animation_loop = 1
+        
+        if self.facing == "up":
+            if(self.y_change == 0):
+                self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
+            else:
+                self.image = self.move[math.floor(self.animation_loop)]
+                self.animation_loop += 0.05
+                if self.animation_loop>=3:
+                    self.animation_loop = 1
+                    
+        if self.facing == "left":
+            if(self.x_change == 0):
+                self.image =self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
+            else:
+                self.image = self.move[math.floor(self.animation_loop)]
+                self.animation_loop += 0.05
+                if self.animation_loop>=3:
+                    self.animation_loop = 1
+                    
+        if self.facing == "right":
+            if(self.x_change == 0):
+                self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
+            else:
+                self.image = self.move[math.floor(self.animation_loop)]
+                self.animation_loop += 0.05
+                if self.animation_loop>=3:
+                    self.animation_loop = 1
+                    
+    def collide_blocks(self,direction):
+        spec_door_hit  = pygame.sprite.spritecollide(self, self.game.specdoors, False)
+        collide_spec_door = []
+        if spec_door_hit:
+            
+            if spec_door_hit[0].activated == False:
+                collide_spec_door = spec_door_hit
+                
+        if direction == "x":
+            
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or collide_spec_door
+            
+            if hits:
+                
+                if self.x_change > 0:
+                    self.facing = random.choice(['left', 'up', 'down'])
+                    
+                    self.rect.x = hits[0].rect.left - self.rect.width
+                if self.x_change < 0:
+                    self.facing = random.choice(['right', 'up', 'down'])
+                    self.rect.x = hits[0].rect.right 
+            
+                    
+        if direction == "y":
+            
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False) or collide_spec_door
+            if hits:
+                if self.y_change > 0:
+                    self.facing = random.choice(['left','right', 'up'])
+                    self.rect.y = hits[0].rect.top - self.rect.height
+                if self.y_change < 0:
+                    self.facing = random.choice(['left','right','down'])
+                    self.rect.y = hits[0].rect.bottom

@@ -195,6 +195,11 @@ class SpecDoor(pygame.sprite.Sprite):
                         
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         #Enemy(self.game, j + j_modifier, i + i_modifier )
+                    if column == '#':
+                        Ground(self.game, j + j_modifier, i + i_modifier )
+                        BombBoss(self.game, j + j_modifier, i + i_modifier )
+                    if column == ',':
+                        Ground(self.game, j + j_modifier, i + i_modifier )
                     if column == 'c':
                         Prop(self.game, os.path.join(
                             dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'coin')
