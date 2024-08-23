@@ -130,7 +130,7 @@ class SpecDoor(pygame.sprite.Sprite):
             i_modifier = (self.rect.y/16) - self.new_start_y
         
         
-        num_loots = random.randint(3, 15)
+        num_loots = random.randint(3, 9)
         num_enemies = random.randint(1,5)
         num_boxes = random.randint(0,5)
         for i, row in enumerate(self.room):

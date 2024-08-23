@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         self._layer = PLAYER_LAYER
         self.groups = self.game.all_sprites, self.game.player
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.AD = 1
+        self.AD = PLAYER_DAMAGE
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.width = TILESIZE

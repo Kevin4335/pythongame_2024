@@ -4,6 +4,7 @@ from config import *
 import math, random
 import os   
 from sprites import *
+from props import *
 dirname = os.path.dirname(__file__)
 
 class Enemy(pygame.sprite.Sprite):
@@ -834,7 +835,7 @@ class BombBoss(pygame.sprite.Sprite):
         self.groups = self.game.all_sprites, self.game.enemies
         pygame.sprite.Sprite.__init__(self, self.groups)
         
-        self.health = 100
+        self.health = 25
 
         self.x = x * TILESIZE 
         self.y = y * TILESIZE
@@ -864,7 +865,11 @@ class BombBoss(pygame.sprite.Sprite):
         
         self.move = [self.enemy_spritesheet.get_sprite(0,0,self.width,self.height),
                            self.enemy_spritesheet.get_sprite(48,0,self.width,self.height),
-                           self.enemy_spritesheet.get_sprite(96,0,self.width,self.height)]
+                           self.enemy_spritesheet.get_sprite(96,0,self.width,self.height),
+                           self.enemy_spritesheet.get_sprite(144,0,self.width,self.height),
+                           self.enemy_spritesheet.get_sprite(192,0,self.width,self.height),
+                           self.enemy_spritesheet.get_sprite(240,0,self.width,self.height),
+                           self.enemy_spritesheet.get_sprite(288,0,self.width,self.height),]
         self.last = pygame.time.get_ticks()
         self.casting_cooldown = 2000 
         
@@ -901,7 +906,17 @@ class BombBoss(pygame.sprite.Sprite):
     
     def die(self):
         if self.health <=0:
-            pygame.mixer.Sound.play(self.game.death_sound)
+            pygame.mixer.Sound.play(self.game.explode_sound)
+            Explosion(self.game,self.rect.x-16,self.rect.y-16)
+            Explosion(self.game,self.rect.x-8,self.rect.y-16)
+            Explosion(self.game,self.rect.x-32,self.rect.y-32)
+            Explosion(self.game,self.rect.x-16,self.rect.y-32)
+            Explosion(self.game,self.rect.x,self.rect.y)
+            for i in range(0,32):
+                rand_pos_x = random.randint(4,46)
+                rand_pos_y = random.randint(4,46)
+                Prop(self.game, os.path.join(
+                                        dirname, '../images/coins.png'), self.rect.x + rand_pos_x, self.rect.y +rand_pos_y , 'coin')
             self.kill()
     
     
@@ -939,8 +954,8 @@ class BombBoss(pygame.sprite.Sprite):
                 self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
             else:
                 self.image = self.move[math.floor(self.animation_loop)]
-                self.animation_loop += 0.05
-                if self.animation_loop>=3:
+                self.animation_loop += 0.2
+                if self.animation_loop>=7:
                     self.animation_loop = 1
         
         if self.facing == "up":
@@ -948,8 +963,8 @@ class BombBoss(pygame.sprite.Sprite):
                 self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
             else:
                 self.image = self.move[math.floor(self.animation_loop)]
-                self.animation_loop += 0.05
-                if self.animation_loop>=3:
+                self.animation_loop += 0.2
+                if self.animation_loop>=7:
                     self.animation_loop = 1
                     
         if self.facing == "left":
@@ -957,8 +972,8 @@ class BombBoss(pygame.sprite.Sprite):
                 self.image =self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
             else:
                 self.image = self.move[math.floor(self.animation_loop)]
-                self.animation_loop += 0.05
-                if self.animation_loop>=3:
+                self.animation_loop += 0.2
+                if self.animation_loop>=7:
                     self.animation_loop = 1
                     
         if self.facing == "right":
@@ -966,8 +981,8 @@ class BombBoss(pygame.sprite.Sprite):
                 self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
             else:
                 self.image = self.move[math.floor(self.animation_loop)]
-                self.animation_loop += 0.05
-                if self.animation_loop>=3:
+                self.animation_loop += 0.2
+                if self.animation_loop>=7:
                     self.animation_loop = 1
                     
     def collide_blocks(self,direction):
