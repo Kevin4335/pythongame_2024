@@ -204,15 +204,16 @@ class Game:
             
             
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pygame.mixer.Sound.play(self.swing_sound)
-                if self.real_player.facing == 'up':
-                    Attack(self,self.real_player.rect.x, self.real_player.rect.y - (ATTACK_RANGE*TILESIZE))
-                if self.real_player.facing == 'down':
-                    Attack(self,self.real_player.rect.x, self.real_player.rect.y + (ATTACK_RANGE*TILESIZE))
-                if self.real_player.facing == 'left':
-                    Attack(self,self.real_player.rect.x- (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
-                if self.real_player.facing == 'right':
-                    Attack(self,self.real_player.rect.x+ (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
+                if event.button == 1:
+                    pygame.mixer.Sound.play(self.swing_sound)
+                    if self.real_player.facing == 'up':
+                        Attack(self,self.real_player.rect.x, self.real_player.rect.y - (ATTACK_RANGE*TILESIZE))
+                    if self.real_player.facing == 'down':
+                        Attack(self,self.real_player.rect.x, self.real_player.rect.y + (ATTACK_RANGE*TILESIZE))
+                    if self.real_player.facing == 'left':
+                        Attack(self,self.real_player.rect.x- (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
+                    if self.real_player.facing == 'right':
+                        Attack(self,self.real_player.rect.x+ (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
     def update(self):
         # gameloop updates
         self.all_sprites.update()
