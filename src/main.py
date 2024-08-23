@@ -194,13 +194,13 @@ class Game:
                 if event.key == pygame.K_SPACE:
                     pygame.mixer.Sound.play(self.swing_sound)
                     if self.real_player.facing == 'up':
-                        Attack(self,self.real_player.rect.x, self.real_player.rect.y - TILESIZE)
+                        Attack(self,self.real_player.rect.x, self.real_player.rect.y - (ATTACK_RANGE*TILESIZE))
                     if self.real_player.facing == 'down':
-                        Attack(self,self.real_player.rect.x, self.real_player.rect.y + TILESIZE)
+                        Attack(self,self.real_player.rect.x, self.real_player.rect.y + (ATTACK_RANGE*TILESIZE))
                     if self.real_player.facing == 'left':
-                        Attack(self,self.real_player.rect.x- TILESIZE, self.real_player.rect.y )
+                        Attack(self,self.real_player.rect.x- (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
                     if self.real_player.facing == 'right':
-                        Attack(self,self.real_player.rect.x+ TILESIZE, self.real_player.rect.y )
+                        Attack(self,self.real_player.rect.x+ (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
 
     def update(self):
         # gameloop updates
