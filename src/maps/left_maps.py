@@ -15,6 +15,20 @@ left_maps = [
     
     [
         'BBBBBBBBBBB      ',
+        'B,$,,$,,$,B      ',
+        'B,,,,,,,,,B      ',
+        'B,,,,,,,,,B      ',
+        'B,,,,,,,,,BBBBBBB',
+        '<,,,,,,,,,,,,,,,?',
+        'B,,,,,,,,,BBBBBBB',
+        'B,,,,,,,,,B      ',
+        'B,,,,,,,,,B      ',
+        'B,,,,,,,,,B      ',
+        'BBBBBBBBBBB      '
+    ],
+    
+    [
+        'BBBBBBBBBBB      ',
         'Bb...Bb...B      ',
         'B....B....B      ',
         'BBBDBBBBDBB      ',

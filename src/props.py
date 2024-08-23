@@ -130,6 +130,9 @@ class Purchasable(pygame.sprite.Sprite):
             elif self.type == "P+":
                 self.file = os.path.join(
                             dirname, '../images/potion_1.png')
+            elif self.type == "S+":
+                self.file = os.path.join(
+                            dirname, '../images/speed_buff.png')
             self.item = Spritesheet(self.file)
             self.image = self.item.get_sprite(0,0,self.width,self.height)
                 
@@ -157,6 +160,17 @@ class Purchasable(pygame.sprite.Sprite):
                             self.kill()
                         else:
                             self.game.money_warn = True
+                    elif self.type == "S+":
+                        if self.game.SPEED == 4:
+                            self.game.upgrade_warn = True
+                        else:
+                            if self.game.score - 20 >=0:
+                                pygame.mixer.Sound.play(self.game.coin_sound)
+                                score_update(self.game, -20)
+                                self.game.SPEED = 4
+                                self.kill()
+                            else:
+                                self.game.money_warn = True
         
             
             

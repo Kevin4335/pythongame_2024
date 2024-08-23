@@ -12,6 +12,7 @@ class Menu():
         game.screen.blit(self.menu_background, (0,GAME_HEIGHT))
         
         self.last = pygame.time.get_ticks()
+        self.upgrade_last = pygame.time.get_ticks()
         self.warning_cooldown = 3000 
         
     def score_counter(self, game):
@@ -36,7 +37,7 @@ class Menu():
         self.score_counter(game)
         self.health_counter(game)
         self.money_warn(game)
-        
+        self.upgrade_warn(game)
     def money_warn(self,game):
         self.text = game.font2.render("Not enough coins!", True, TITLE_TEXT)
         self.text_rect = self.text.get_rect(topleft=(24, GAME_HEIGHT + 72))
@@ -51,6 +52,20 @@ class Menu():
         else:
             game.money_warn = False
             self.last = self.now
+            
+    def upgrade_warn(self, game):
+        self.text = game.font2.render("Already have this!", True, TITLE_TEXT)
+        self.text_rect = self.text.get_rect(topleft=(24, GAME_HEIGHT + 72))
+        
+        self.upgrade_now = pygame.time.get_ticks()
+        
+        if self.upgrade_now - self.upgrade_last <= self.warning_cooldown and game.upgrade_warn == True:
+            
+            
+            game.screen.blit(self.text, self.text_rect)
+        else:
+            game.upgrade_warn = False
+            self.upgrade_last = self.upgrade_now
         
             
         

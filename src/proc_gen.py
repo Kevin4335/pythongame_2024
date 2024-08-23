@@ -210,8 +210,8 @@ class SpecDoor(pygame.sprite.Sprite):
                             dirname, '../images/pedestal.png'), j + j_modifier, i + i_modifier + 1)
                         
                         shop_gen = random.choices(
-                                    population=["AD+", "P+"],
-                                    weights=[50,50],
+                                    population=["AD+", "P+", "S+"],
+                                    weights=[32,35,33],
                                     k=1
                                 )
                         Purchasable(self.game, j + j_modifier, i + i_modifier, shop_gen[0])

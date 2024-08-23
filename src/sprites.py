@@ -113,27 +113,27 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_a]:
             #camera lock
             for sprite in self.game.all_sprites:
-                sprite.rect.x += PLAYER_SPEED
+                sprite.rect.x += self.game.SPEED
                 
-            self.x_change -= PLAYER_SPEED
+            self.x_change -= self.game.SPEED
         if keys[pygame.K_d]:
             #camera lock
             for sprite in self.game.all_sprites:
-                sprite.rect.x -= PLAYER_SPEED
+                sprite.rect.x -= self.game.SPEED
                 
-            self.x_change += PLAYER_SPEED
+            self.x_change += self.game.SPEED
         if keys[pygame.K_s]:
             #camera lock
             for sprite in self.game.all_sprites:
-                sprite.rect.y -= PLAYER_SPEED
+                sprite.rect.y -= self.game.SPEED
                 
-            self.y_change += PLAYER_SPEED
+            self.y_change += self.game.SPEED
         if keys[pygame.K_w]:
             #camera lock
             for sprite in self.game.all_sprites:
-                sprite.rect.y += PLAYER_SPEED
+                sprite.rect.y += self.game.SPEED
                 
-            self.y_change -= PLAYER_SPEED
+            self.y_change -= self.game.SPEED
             
     def collide_blocks(self,direction):
         if direction == "x":
@@ -143,12 +143,12 @@ class Player(pygame.sprite.Sprite):
                     #camera lock
                     for sprite in self.game.all_sprites:
                         
-                        sprite.rect.x += PLAYER_SPEED
+                        sprite.rect.x += self.game.SPEED
                     self.rect.x = hits[0].rect.left - self.rect.width
                 if self.x_change < 0:
                     #camera lock
                     for sprite in self.game.all_sprites:
-                        sprite.rect.x -= PLAYER_SPEED
+                        sprite.rect.x -= self.game.SPEED
                     self.rect.x = hits[0].rect.right 
                     
         if direction == "y":
@@ -157,12 +157,12 @@ class Player(pygame.sprite.Sprite):
                 if self.y_change > 0:
                     #camera lock
                     for sprite in self.game.all_sprites:
-                        sprite.rect.y += PLAYER_SPEED
+                        sprite.rect.y += self.game.SPEED
                     self.rect.y = hits[0].rect.top - self.rect.height
                 if self.y_change < 0:
                     #camera lock
                     for sprite in self.game.all_sprites:
-                        sprite.rect.y -= PLAYER_SPEED
+                        sprite.rect.y -= self.game.SPEED
                     self.rect.y = hits[0].rect.bottom
                     
     def collide_enemy(self):

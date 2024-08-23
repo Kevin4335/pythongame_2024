@@ -104,7 +104,8 @@ class Game:
         self.damage_cooldown = 1000 
         self.attack_reset = True
         self.money_warn = False
-    
+        self.upgrade_warn = False
+        self.SPEED = PLAYER_SPEED
         # self.terrain_spritesheet = Spritesheet('images/Terrain.png)
 
     def createTilemap(self, tilemap):
