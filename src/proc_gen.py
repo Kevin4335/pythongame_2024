@@ -52,13 +52,13 @@ class SpecDoor(pygame.sprite.Sprite):
     
     def create_room(self):
         if self.type == "right":
-            self.room = random.choice([right_maps.a, right_maps.c])
+            self.room = random.choice(right_maps.right_maps)
         elif self.type == "down":
-            self.room = random.choice([down_maps.a, down_maps.b, down_maps.c])
+            self.room = random.choice(down_maps.down_maps)
         elif self.type == "left":
-            self.room = random.choice([left_maps.a, left_maps.c])
+            self.room = random.choice(left_maps.left_maps)
         elif self.type == "up":
-            self.room = random.choice([up_maps.a, up_maps.c])
+            self.room = random.choice(up_maps.up_maps)
         self.new_start_x =-1
         self.new_start_y = -1
         
