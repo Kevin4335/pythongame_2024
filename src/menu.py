@@ -26,7 +26,7 @@ class Menu():
         health_text = str(game.health)
         
             
-        self.text = game.font2.render("You feel " + str(health_text), True, TITLE_TEXT)
+        self.text = game.font2.render("HP: " + str(health_text), True, TITLE_TEXT)
         self.text_rect = self.text.get_rect(topleft=(24, GAME_HEIGHT + 48))
         
         game.screen.blit(self.text, self.text_rect)
