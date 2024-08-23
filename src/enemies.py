@@ -616,6 +616,10 @@ class Bombguy(pygame.sprite.Sprite):
         self.relative_x = self.rect.x - PLAYER_X
         self.relative_y = self.rect.y - PLAYER_Y
         self.distance_to_player = (math.sqrt((self.relative_x)**2+(self.relative_y)**2))
+        if self.distance_to_player <= 16:
+            pygame.mixer.Sound.play(self.game.explode_sound)
+            Explosion(self.game,self.rect.x-16,self.rect.y-16)
+            self.kill()
         
     def die(self):
         if self.health <=0:
