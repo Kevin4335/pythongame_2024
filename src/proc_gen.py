@@ -256,7 +256,7 @@ class SpecDoor(pygame.sprite.Sprite):
                 if crash:
                     break
                 for self.c in range(self.cols):
-                    x_crash = self.rect.x-16-PLAYER_SPEED -(self.c * 16)               
+                    x_crash = self.rect.x-16-self.game.SPEED -(self.c * 16)               
                     y_crash = self.rect.y +((self.r-self.new_start_y)*16)
                     if crash:
                         break
@@ -267,10 +267,10 @@ class SpecDoor(pygame.sprite.Sprite):
                         
                         temp_modifier = 0
                         if wall[0]%16 != 0:
-                            if (wall[0]-PLAYER_SPEED)%16 == 0:
-                                temp_modifier = PLAYER_SPEED
+                            if (wall[0]-self.game.SPEED)%16 == 0:
+                                temp_modifier = self.game.SPEED
                             else:
-                                temp_modifier = -PLAYER_SPEED
+                                temp_modifier = -self.game.SPEED
                         if wall == (x_crash+ temp_modifier, y_crash ) :
                             self.room = plugL
                             
@@ -282,7 +282,7 @@ class SpecDoor(pygame.sprite.Sprite):
                 if crash:
                     break
                 for self.c in range(self.cols):
-                    x_crash = self.rect.x+16 +PLAYER_SPEED+(self.c * 16)               
+                    x_crash = self.rect.x+16 +self.game.SPEED+(self.c * 16)               
                     y_crash = self.rect.y +((self.r-self.new_start_y)*16)
                     if crash:
                         break
@@ -293,10 +293,10 @@ class SpecDoor(pygame.sprite.Sprite):
                         
                         temp_modifier = 0
                         if wall[0]%16 != 0:
-                            if (wall[0]-PLAYER_SPEED)%16 == 0:
-                                temp_modifier = PLAYER_SPEED
+                            if (wall[0]-self.game.SPEED)%16 == 0:
+                                temp_modifier = self.game.SPEED
                             else:
-                                temp_modifier = -PLAYER_SPEED
+                                temp_modifier = -self.game.SPEED
                                 
                         if wall == (x_crash+ temp_modifier, y_crash ) :
                             self.room = plugR
@@ -322,10 +322,10 @@ class SpecDoor(pygame.sprite.Sprite):
                         
                         temp_modifier = 0
                         if wall[0]%16 != 0:
-                            if (wall[1]-PLAYER_SPEED)%16 == 0:
-                                temp_modifier = PLAYER_SPEED
+                            if (wall[1]-self.game.SPEED)%16 == 0:
+                                temp_modifier = self.game.SPEED
                             else:
-                                temp_modifier = -PLAYER_SPEED
+                                temp_modifier = -self.game.SPEED
                         if wall == (x_crash , y_crash+ temp_modifier) :
                             self.room = plugU
                             
@@ -341,7 +341,7 @@ class SpecDoor(pygame.sprite.Sprite):
                     for self.c in range(self.cols):
                         
                         
-                        y_crash = self.rect.y+16+PLAYER_SPEED +(self.r * 16)                 
+                        y_crash = self.rect.y+16+self.game.SPEED +(self.r * 16)                 
                         x_crash = self.rect.x +((self.c-self.new_start_x)*16)
                         if crash:
                             break
@@ -352,10 +352,10 @@ class SpecDoor(pygame.sprite.Sprite):
                             
                             temp_modifier = 0
                             if wall[1]%16 != 0:
-                                if (wall[1]-PLAYER_SPEED)%16 == 0:
-                                    temp_modifier = PLAYER_SPEED
+                                if (wall[1]-self.game.SPEED)%16 == 0:
+                                    temp_modifier = self.game.SPEED
                                 else:
-                                    temp_modifier = -PLAYER_SPEED
+                                    temp_modifier = -self.game.SPEED
                             if wall == (x_crash, y_crash + temp_modifier) :
                                 self.room = plugD
                                 
