@@ -200,7 +200,7 @@ class Player(pygame.sprite.Sprite):
     def animate(self):
         
         if self.facing == "down":
-            if(self.y_change == 0):
+            if(self.y_change == 0 and self.x_change == 0):
                 self.image = self.game.character_spritesheet.get_sprite(0,0,self.width,self.height)
             else:
                 self.image = self.down_animations[math.floor(self.animation_loop)]
@@ -209,7 +209,7 @@ class Player(pygame.sprite.Sprite):
                     self.animation_loop = 1
         
         if self.facing == "up":
-            if(self.y_change == 0):
+            if(self.y_change == 0 and self.x_change == 0):
                 self.image = self.game.character_spritesheet.get_sprite(0,16,self.width,self.height)
             else:
                 self.image = self.up_animations[math.floor(self.animation_loop)]
@@ -218,7 +218,7 @@ class Player(pygame.sprite.Sprite):
                     self.animation_loop = 1
                     
         if self.facing == "left":
-            if(self.x_change == 0):
+            if(self.y_change == 0 and self.x_change == 0):
                 self.image = self.game.character_spritesheet.get_sprite(0,48,self.width,self.height)
             else:
                 self.image = self.left_animations[math.floor(self.animation_loop)]
@@ -227,7 +227,7 @@ class Player(pygame.sprite.Sprite):
                     self.animation_loop = 1
                     
         if self.facing == "right":
-            if(self.x_change == 0):
+            if(self.y_change == 0 and self.x_change == 0):
                 self.image = self.game.character_spritesheet.get_sprite(0,32,self.width,self.height)
             else:
                 self.image = self.right_animations[math.floor(self.animation_loop)]
