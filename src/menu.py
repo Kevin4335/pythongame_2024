@@ -11,6 +11,9 @@ class Menu():
         self.menu_background = pygame.image.load(os.path.join(dirname, "../images/Menu_Graphic.png"))
         game.screen.blit(self.menu_background, (0,GAME_HEIGHT))
         
+        self.last = pygame.time.get_ticks()
+        self.warning_cooldown = 3000 
+        
     def score_counter(self, game):
         self.text = game.font2.render("$$$: " + str(game.score), True, TITLE_TEXT)
         self.text_rect = self.text.get_rect(topleft=(24, GAME_HEIGHT + 24))
@@ -19,21 +22,7 @@ class Menu():
         game.screen.blit(self.text, self.text_rect)
 
     def health_counter(self, game):
-        health_text = ""
-        if game.health >5:
-            health_text = "AMAZING"
-        elif game.health == 5 :
-            health_text = "great"
-        elif game.health == 4:
-            health_text = "okay"
-        elif game.health == 3:
-            health_text = "bad"
-        elif game.health == 2:
-            health_text = "painful"
-        elif game.health == 1:
-            health_text = "terrible"
-        else:
-            health_text = "DEAD"
+        health_text = str(game.health)
         
             
         self.text = game.font2.render("You feel " + str(health_text), True, TITLE_TEXT)
@@ -46,5 +35,23 @@ class Menu():
         game.screen.blit(self.menu_background, (0,GAME_HEIGHT))
         self.score_counter(game)
         self.health_counter(game)
+        self.money_warn(game)
+        
+    def money_warn(self,game):
+        self.text = game.font2.render("Not enough coins!", True, TITLE_TEXT)
+        self.text_rect = self.text.get_rect(topleft=(24, GAME_HEIGHT + 72))
+        
+        self.now = pygame.time.get_ticks()
+        
+        
+        if self.now - self.last <= self.warning_cooldown and game.money_warn == True:
+            
+            
+            game.screen.blit(self.text, self.text_rect)
+        else:
+            game.money_warn = False
+            self.last = self.now
+        
+            
         
     

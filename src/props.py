@@ -87,6 +87,61 @@ class Box(pygame.sprite.Sprite):
             Prop(self.game, os.path.join(
                 dirname, '../images/potion_1.png'),self.rect.x ,self.rect.y , '1Pot')
             self.kill()
+
+class Pedestal(pygame.sprite.Sprite):
+    def __init__(self, game, file, x, y):
+        self.game = game 
+        self._layer = UNDER_LAYER
+        self.groups = self.game.all_sprites, self.game.props
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.type = type
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE 
+        
+        self.width = TILESIZE
+        self.height = TILESIZE
+        
+        self.Chest_spritesheet = Spritesheet(file)
+        self.image = self.Chest_spritesheet.get_sprite(0,0,self.width,self.height)
+               
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+                     
+class Purchasable(pygame.sprite.Sprite):
+        def __init__(self, game, file, x, y):
+            self.i = x
+            self.j = y
+            self.game = game 
+            self._layer = PROP_LAYER
+            self.groups = self.game.all_sprites, self.game.props
+            pygame.sprite.Sprite.__init__(self, self.groups)
+            
+            self.x = x * TILESIZE
+            self.y = y * TILESIZE
+            
+            self.width = TILESIZE
+            self.height = TILESIZE
+            
+            self.item = Spritesheet(file)
+            self.image = self.item.get_sprite(0,0,self.width,self.height)
+                
+            self.rect = self.image.get_rect()
+            self.rect.x = self.x
+            self.rect.y = self.y
+        
+        def update(self):
+            if(pygame.sprite.spritecollide(self, self.game.player, False)):
+                    
+                    if self.game.score - 20 >=0:
+                        pygame.mixer.Sound.play(self.game.coin_sound)
+                        score_update(self.game, -20)
+                        self.game.real_player.AD += 2
+                        self.kill()
+                    else:
+                        self.game.money_warn = True
+        
+            
             
         
-    

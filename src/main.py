@@ -103,6 +103,7 @@ class Game:
         self.last = pygame.time.get_ticks()
         self.damage_cooldown = 1000 
         self.attack_reset = True
+        self.money_warn = False
     
         # self.terrain_spritesheet = Spritesheet('images/Terrain.png)
 

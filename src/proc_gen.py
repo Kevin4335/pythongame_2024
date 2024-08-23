@@ -204,7 +204,12 @@ class SpecDoor(pygame.sprite.Sprite):
                         Prop(self.game, os.path.join(
                             dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'coin')
                         Ground(self.game, j + j_modifier, i + i_modifier )
-                        
+                    if column == '$':
+                        Ground(self.game, j + j_modifier, i + i_modifier )
+                        Pedestal(self.game, os.path.join(
+                            dirname, '../images/pedestal.png'), j + j_modifier, i + i_modifier)
+                        Purchasable(self.game, os.path.join(
+                            dirname, '../images/damage_buff.png'), j + j_modifier, i + i_modifier)
                     if column == "P":
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         #Player(self, j, i)
