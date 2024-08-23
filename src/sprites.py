@@ -76,7 +76,7 @@ class Player(pygame.sprite.Sprite):
         
     def update(self):
         self.movement()
-        
+        self.facing_pos()
         self.animate()
         
         self.collide_enemy()
@@ -90,6 +90,22 @@ class Player(pygame.sprite.Sprite):
         self.y_change = 0
         
     
+    def facing_pos(self):
+        x, y = pygame.mouse.get_pos()
+        self.relative_x = x - PLAYER_X
+        self.relative_y = y - PLAYER_Y
+        if abs(self.relative_x) >= abs(self.relative_y):
+            if self.relative_x >0:
+                self.facing = 'right'
+            elif self.relative_x <0:
+                self.facing = 'left'
+        
+        if abs(self.relative_y) >= abs(self.relative_x):           
+            if self.relative_y >0:
+                self.facing = 'down'
+            elif self.relative_y <0:
+                self.facing = 'up'
+        
 
     
     def movement(self):
@@ -100,28 +116,24 @@ class Player(pygame.sprite.Sprite):
                 sprite.rect.x += PLAYER_SPEED
                 
             self.x_change -= PLAYER_SPEED
-            self.facing = 'left'
         if keys[pygame.K_d]:
             #camera lock
             for sprite in self.game.all_sprites:
                 sprite.rect.x -= PLAYER_SPEED
                 
             self.x_change += PLAYER_SPEED
-            self.facing = 'right'
         if keys[pygame.K_s]:
             #camera lock
             for sprite in self.game.all_sprites:
                 sprite.rect.y -= PLAYER_SPEED
                 
             self.y_change += PLAYER_SPEED
-            self.facing = 'down'
         if keys[pygame.K_w]:
             #camera lock
             for sprite in self.game.all_sprites:
                 sprite.rect.y += PLAYER_SPEED
                 
             self.y_change -= PLAYER_SPEED
-            self.facing = 'up'
             
     def collide_blocks(self,direction):
         if direction == "x":
