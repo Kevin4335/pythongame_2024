@@ -94,11 +94,15 @@ class Game:
 
         self.score = 0
         self.health = 5
-        # self.game_over_png = pygame.image.load('images/hilarious.png')
+        # self.game_over_png = pygame.imawload('images/hilarious.png')
         self.wall_num = 0
         self.wall_list = []
         
         self.rooms = 0
+        
+        self.last = pygame.time.get_ticks()
+        self.damage_cooldown = 1000 
+        self.attack_reset = True
     
         # self.terrain_spritesheet = Spritesheet('images/Terrain.png)
 
@@ -163,14 +167,14 @@ class Game:
 
         self.playing = True
         self.all_sprites = pygame.sprite.LayeredUpdates()
-        self.player = pygame.sprite.LayeredUpdates()
         self.blocks = pygame.sprite.LayeredUpdates()
-        self.enemies = pygame.sprite.LayeredUpdates()
-        self.doors = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
+        self.player = pygame.sprite.LayeredUpdates()
+        self.enemies = pygame.sprite.LayeredUpdates()
         self.props = pygame.sprite.LayeredUpdates()
         self.specdoors = pygame.sprite.LayeredUpdates()
         self.walls  = pygame.sprite.LayeredUpdates()
+        self.doors = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
         
         self.destructables = pygame.sprite.LayeredUpdates()
@@ -188,6 +192,10 @@ class Game:
 
     def events(self):
         # gameloop events
+        self.now = pygame.time.get_ticks()
+        if self.now - self.last >= self.damage_cooldown and self.attack_reset == False:
+                self.last = self.now
+                self.attack_reset= True
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
@@ -206,20 +214,23 @@ class Game:
             #         if self.real_player.facing == 'right':
             #             Attack(self,self.real_player.rect.x+ (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
             
-            
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    pygame.mixer.Sound.play(self.swing_sound)
-                    if self.real_player.facing == 'up':
-                        Attack(self,self.real_player.rect.x, self.real_player.rect.y - (ATTACK_RANGE*TILESIZE))
-                    if self.real_player.facing == 'down':
-                        Attack(self,self.real_player.rect.x, self.real_player.rect.y + (ATTACK_RANGE*TILESIZE))
-                    if self.real_player.facing == 'left':
-                        Attack(self,self.real_player.rect.x- (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
-                    if self.real_player.facing == 'right':
-                        Attack(self,self.real_player.rect.x+ (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
+            if self.attack_reset == True:
+                
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        self.attack_reset = False
+                        pygame.mixer.Sound.play(self.swing_sound)
+                        if self.real_player.facing == 'up':
+                            Attack(self,self.real_player.rect.x, self.real_player.rect.y - (ATTACK_RANGE*TILESIZE))
+                        if self.real_player.facing == 'down':
+                            Attack(self,self.real_player.rect.x, self.real_player.rect.y + (ATTACK_RANGE*TILESIZE))
+                        if self.real_player.facing == 'left':
+                            Attack(self,self.real_player.rect.x- (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
+                        if self.real_player.facing == 'right':
+                            Attack(self,self.real_player.rect.x+ (ATTACK_RANGE*TILESIZE), self.real_player.rect.y )
     def update(self):
         # gameloop updates
+        
         self.all_sprites.update()
         self.menu.update(self)
 
@@ -235,7 +246,7 @@ class Game:
     def main(self):
         # game loop
         while self.playing:
-
+            
             self.events()
             self.update()
             self.draw()
