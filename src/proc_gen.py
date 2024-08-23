@@ -175,8 +175,8 @@ class SpecDoor(pygame.sprite.Sprite):
                         elif enemy_gen[0] == True:
                             if num_enemies>0:
                                 enemy_type_gen = random.choices(
-                                    population=["1", "2"],
-                                    weights=[80,20],
+                                    population=["1", "2", "3"],
+                                    weights=[40,20,40],
                                     k=1
                                 )
                                 if enemy_type_gen[0] == "1":
@@ -184,7 +184,8 @@ class SpecDoor(pygame.sprite.Sprite):
                                     Enemy(self.game, j + j_modifier, i + i_modifier )
                                 elif enemy_type_gen[0] == "2":
                                     EnemyMage(self.game, j + j_modifier, i + i_modifier )
-                                    
+                                elif enemy_type_gen[0] == "3":
+                                    Bombguy(self.game, j + j_modifier, i + i_modifier )
                                 num_enemies = num_enemies -1
                         elif box_gen[0] == True:
                             if num_boxes>0:

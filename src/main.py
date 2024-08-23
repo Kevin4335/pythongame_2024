@@ -47,6 +47,8 @@ class Game:
             os.path.join(dirname, "../resources/equip.mp3"))
         self.drink_sound = pygame.mixer.Sound(
             os.path.join(dirname, "../resources/drink.mp3"))
+        
+        self.explode_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/explosion.mp3"))
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         self.prop_sound.set_volume(0.1)
@@ -60,6 +62,7 @@ class Game:
         self.wood_attack.set_volume(0.1)
         self.drink_sound.set_volume(0.1)
         self.equip_sound.set_volume(0.05)
+        self.explode_sound.set_volume(0.1)
         mixer.music.set_volume(0.05)
         mixer.music.play(loops=-1)
 
@@ -84,6 +87,7 @@ class Game:
         self.damaged = Spritesheet(
             os.path.join(dirname, '../images/damaged.png'))
         
+        self.explode_spritesheet = Spritesheet(os.path.join(dirname,'../images/explode.png'))
         self.attack_spritesheet = Spritesheet(os.path.join(dirname, '../images/attacks.png'))
         
         self.Wall_spritesheet = pygame.image.load(os.path.join(dirname, '../images/bricks.png'))
