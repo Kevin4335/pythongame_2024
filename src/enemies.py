@@ -806,6 +806,11 @@ class Explosion(pygame.sprite.Sprite):
             self.game.real_player.damage()
             self.hit = True
             pygame.mixer.Sound.play(self.game.hit_sound)
+            
+        box_hit = pygame.sprite.spritecollide(self,self.game.destructables, False)
+        if box_hit:
+            for box in box_hit:
+                box.health = box.health -1
     
     def animate(self):
         
