@@ -186,6 +186,7 @@ class Game:
         self.createTilemap(room0)
         self.menu = Menu(self)
         self.SPEED = PLAYER_SPEED
+        self.real_player.AD = PLAYER_DAMAGE
         self.score = 0
         self.health = PLAYER_HEALTH
         self.rooms = 0
