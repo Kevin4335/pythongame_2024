@@ -30,6 +30,7 @@ class Menu():
         self.text_rect = self.text.get_rect(topleft=(24, GAME_HEIGHT + 48))
         
         game.screen.blit(self.text, self.text_rect)
+        
     
     def update(self, game):
         

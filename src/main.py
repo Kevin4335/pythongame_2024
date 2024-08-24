@@ -185,6 +185,7 @@ class Game:
         self.wall_list = []
         self.createTilemap(room0)
         self.menu = Menu(self)
+        self.SPEED = PLAYER_SPEED
         self.score = 0
         self.health = PLAYER_HEALTH
         self.rooms = 0
