@@ -40,6 +40,25 @@ up_maps =[
         'B...B',
         'BB?BB',
     ],
+    
+    [
+        'BBBB',
+        'B..B',
+        'B.bB',
+        'B?BB',
+    ],
+    [
+        'BB^B',
+        'B..B',
+        'B..B',
+        'BB?B',
+    ],
+    [
+        'BBBB',
+        'Bb.B',
+        'B..B',
+        'B?BB',
+    ],
     [
         'BBBBB^BBBBB',
         'B,,,,,,,,,B',

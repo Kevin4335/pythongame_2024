@@ -58,6 +58,25 @@ down_maps = [
         'B...B',
         'BBvBB',
     ],
+    
+    [
+        'BB?B',
+        'Bb.B',
+        'B..B',
+        'BBBB',
+    ],
+    [
+        'B?BB',
+        'Bb.B',
+        'B..B',
+        'BBBB',
+    ],
+    [
+        'BB?B',
+        'B..B',
+        'B..B',
+        'BBvB',
+    ],
 
     [
         '       B?B       ',
