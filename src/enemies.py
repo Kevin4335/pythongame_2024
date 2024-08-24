@@ -30,7 +30,7 @@ class Enemy(pygame.sprite.Sprite):
         self.movement_loop = 0
         self.self_speed = ENEMY_SPEED
         self.enemy_spritesheet = Spritesheet(
-            os.path.join(dirname, '../images/Enemy1.png'))
+            os.path.join(dirname, '..','images', 'Enemy1.png'))
         self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
 
         self.rect = self.image.get_rect()
@@ -252,7 +252,7 @@ class EnemyMage(pygame.sprite.Sprite):
         self.self_speed = ENEMY_SPEED
         
         self.mage_spritesheet = Spritesheet(
-            os.path.join(dirname, '../images/Enemy2.png'))
+            os.path.join(dirname, '..', 'images', 'Enemy2.png'))
         self.image = self.mage_spritesheet.get_sprite(0,0,self.width,self.height)
 
         self.rect = self.image.get_rect()
@@ -454,7 +454,7 @@ class Bullet(pygame.sprite.Sprite):
         self.movement_loop = 0
         self.self_speed = ENEMY_SPEED + 1
         self.bullet_spritesheet = Spritesheet(
-            os.path.join(dirname, '../images/bullet.png'))
+            os.path.join(dirname, '..', 'images', 'bullet.png'))
         self.image = self.bullet_spritesheet.get_sprite(0,0,self.width,self.height)
 
         self.rect = self.image.get_rect()
@@ -568,7 +568,7 @@ class Bombguy(pygame.sprite.Sprite):
         self.movement_loop = 0
         self.self_speed = ENEMY_SPEED
         self.enemy_spritesheet = Spritesheet(
-            os.path.join(dirname, '../images/Enemy3.png'))
+            os.path.join(dirname, '..', 'images', 'Enemy3.png'))
         self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
 
         self.rect = self.image.get_rect()
@@ -849,7 +849,7 @@ class BombBoss(pygame.sprite.Sprite):
         self.movement_loop = 0
         self.self_speed = ENEMY_SPEED
         self.enemy_spritesheet = Spritesheet(
-            os.path.join(dirname, '../images/BombBoss.png'))
+            os.path.join(dirname, '..', 'images', 'BombBoss.png'))
         self.image = self.enemy_spritesheet.get_sprite(0,0,self.width,self.height)
 
         self.rect = self.image.get_rect()
@@ -916,7 +916,7 @@ class BombBoss(pygame.sprite.Sprite):
                 rand_pos_x = random.randint(4,46)
                 rand_pos_y = random.randint(4,46)
                 Prop(self.game, os.path.join(
-                                        dirname, '../images/coins.png'), self.rect.x + rand_pos_x, self.rect.y +rand_pos_y , 'coin')
+                                        dirname, '..', 'images', 'coins.png'), self.rect.x + rand_pos_x, self.rect.y +rand_pos_y , 'coin')
             self.kill()
     
     

@@ -136,13 +136,13 @@ class SpecDoor(pygame.sprite.Sprite):
         for i, row in enumerate(self.room):
                 for j, column in enumerate(row):                                                                               
                     if column == "B":
-                        Wall(self.game, os.path.join(dirname, '../images/bricks.png'), j+ j_modifier, i + i_modifier )
+                        Wall(self.game, os.path.join(dirname, '..', 'images', 'bricks.png'), j+ j_modifier, i + i_modifier )
                     if column == 'b':
                         Ground(self.game, j+ j_modifier, i + i_modifier )
-                        Block(self.game, os.path.join(dirname, '../images/Bed.png'), j + j_modifier, i + i_modifier )
+                        Block(self.game, os.path.join(dirname, '..', 'images', 'Bed.png'), j + j_modifier, i + i_modifier )
                     if column == 'D':
                         Ground(self.game, j + j_modifier, i + i_modifier )
-                        Door(self.game, os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier )
+                        Door(self.game, os.path.join(dirname, '..', 'images', 'Door.png'), j + j_modifier, i + i_modifier )
                     
                     if column == '.':
                         
@@ -170,7 +170,7 @@ class SpecDoor(pygame.sprite.Sprite):
                         if loot_gen[0] == True:
                             if num_loots>0:
                                 Prop(self.game, os.path.join(
-                                    dirname, '../images/coins.png'), (j + j_modifier)*16, (i + i_modifier)*16 , 'coin')
+                                    dirname, '..', 'images', 'coins.png'), (j + j_modifier)*16, (i + i_modifier)*16 , 'coin')
                                 num_loots = num_loots -1
                         elif enemy_gen[0] == True:
                             if num_enemies>0:
@@ -189,7 +189,7 @@ class SpecDoor(pygame.sprite.Sprite):
                                 num_enemies = num_enemies -1
                         elif box_gen[0] == True:
                             if num_boxes>0:
-                                Box(self.game, os.path.join(dirname, '../images/box.png'), j + j_modifier, i + i_modifier)
+                                Box(self.game, os.path.join(dirname, '..', 'images', 'box.png'), j + j_modifier, i + i_modifier)
                                 num_boxes = num_boxes -1
                     if column == 'e':
                         
@@ -202,12 +202,12 @@ class SpecDoor(pygame.sprite.Sprite):
                         Ground(self.game, j + j_modifier, i + i_modifier )
                     if column == 'c':
                         Prop(self.game, os.path.join(
-                            dirname, '../images/coins.png'), j + j_modifier, i + i_modifier , 'coin')
+                            dirname, '..', 'images', 'coins.png'), j + j_modifier, i + i_modifier , 'coin')
                         Ground(self.game, j + j_modifier, i + i_modifier )
                     if column == '$':
                         Ground(self.game, j + j_modifier, i + i_modifier )
                         Pedestal(self.game, os.path.join(
-                            dirname, '../images/pedestal.png'), j + j_modifier, i + i_modifier + 1)
+                            dirname, '..', 'images', 'pedestal.png'), j + j_modifier, i + i_modifier + 1)
                         
                         shop_gen = random.choices(
                                     population=["AD+", "P+", "S+"],
@@ -220,22 +220,22 @@ class SpecDoor(pygame.sprite.Sprite):
                         #Player(self, j, i)
                     if column =="■":
                         Ground(self.game, j + j_modifier, i + i_modifier)
-                        Box(self.game, os.path.join(dirname, '../images/box.png'), j + j_modifier, i + i_modifier)
+                        Box(self.game, os.path.join(dirname, '..', 'images', 'box.png'), j + j_modifier, i + i_modifier)
                     if column == "^":
                         Ground(self.game, j + j_modifier, i + i_modifier )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier , 'up')
+                        SpecDoor(self.game,os.path.join(dirname, '..', 'images', 'Door.png'), j + j_modifier, i + i_modifier , 'up')
                         #Player(self, j, i)
                     if column == "v":
                         Ground(self.game, j + j_modifier, i + i_modifier )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier ,"down")
+                        SpecDoor(self.game,os.path.join(dirname, '..', 'images', 'Door.png'), j + j_modifier, i + i_modifier ,"down")
                         #Player(self, j, i)
                     if column == "<":
                         Ground(self.game, j + j_modifier, i + i_modifier )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier ,"left")
+                        SpecDoor(self.game,os.path.join(dirname, '..', 'images', 'Door.png'), j + j_modifier, i + i_modifier ,"left")
                         #Player(self, j, i)
                     if column == ">":
                         Ground(self.game, j + j_modifier, i + i_modifier )
-                        SpecDoor(self.game,os.path.join(dirname, '../images/Door.png'), j + j_modifier, i + i_modifier ,"right")
+                        SpecDoor(self.game,os.path.join(dirname, '..', 'images', 'Door.png'), j + j_modifier, i + i_modifier ,"right")
                         #Player(self, j, i)
                     if column == "?":
                         Ground(self.game, j + j_modifier, i + i_modifier )

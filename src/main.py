@@ -18,37 +18,37 @@ class Game:
 
         mixer.init()
         mixer.music.load(os.path.join(
-            dirname, "../resources/mossy-sewer.mp3"))
+            dirname, "..", "resources", "mossy-sewer.mp3"))
         self.blood_sound = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/blood_sound.wav"))
+            os.path.join(dirname, "..", "resources", "blood_sound.wav"))
         self.click_sound = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/click.mp3"))
+            os.path.join(dirname, "..", "resources", "click.mp3"))
         self.prop_sound = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/select-sound.mp3"))
+            os.path.join(dirname, "..", "resources", "select-sound.mp3"))
         self.ui_hover = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/bloop.mp3"))
+            os.path.join(dirname, "..", "resources", "bloop.mp3"))
         self.door_open = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/open-doors.mp3"))
+            os.path.join(dirname, "..", "resources", "open-doors.mp3"))
         
        
-        self.coin_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/coins.mp3"))
+        self.coin_sound = pygame.mixer.Sound(os.path.join(dirname, "..", "resources", "coins.mp3"))
         
         self.swing_sound = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/whoosh.mp3"))
+            os.path.join(dirname, "..", "resources", "whoosh.mp3"))
         self.hit_sound = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/hit.mp3"))
+            os.path.join(dirname, "..", "resources", "hit.mp3"))
         self.death_sound = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/death.mp3"))
+            os.path.join(dirname, "..", "resources", "death.mp3"))
         self.box_open = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/open_break.mp3"))
+            os.path.join(dirname, "..", "resources", "open_break.mp3"))
         self.wood_attack = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/wood_attack.mp3"))
+            os.path.join(dirname, "..", "resources", "wood_attack.mp3"))
         self.equip_sound = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/equip.mp3"))
+            os.path.join(dirname, "..", "resources", "equip.mp3"))
         self.drink_sound = pygame.mixer.Sound(
-            os.path.join(dirname, "../resources/drink.mp3"))
+            os.path.join(dirname, "..", "resources", "drink.mp3"))
         
-        self.explode_sound = pygame.mixer.Sound(os.path.join(dirname, "../resources/explosion.mp3"))
+        self.explode_sound = pygame.mixer.Sound(os.path.join(dirname, "..", "resources", "explosion.mp3"))
         self.blood_sound.set_volume(0.03)
         self.click_sound.set_volume(0.3)
         self.prop_sound.set_volume(0.1)
@@ -68,29 +68,29 @@ class Game:
 
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         programIcon = pygame.image.load(
-            os.path.join(dirname, "../images/Temp_Icon.png"))
+            os.path.join(dirname, "..", "images", "Temp_Icon.png"))
         pygame.display.set_icon(programIcon)
         pygame.display.set_caption('Game')
 
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(os.path.join(
-            dirname, "../fonts/04B_30__.TTF"), 32)
+            dirname, "..", "fonts", "04B_30__.TTF"), 32)
         self.font2 = pygame.font.Font(
-            os.path.join(dirname, "../fonts/dogica.ttf"), 16)
+            os.path.join(dirname, "..", "fonts", "dogica.ttf"), 16)
 
         self.running = True
         self.intro_background = pygame.image.load(
-            os.path.join(dirname, '../images/pxArt.png'))
+            os.path.join(dirname, '..', 'images', 'pxArt.png'))
         self.character_spritesheet = Spritesheet(
-            os.path.join(dirname, '../images/Character.png'))
+            os.path.join(dirname, '..', 'images', 'Character.png'))
         
         self.damaged = Spritesheet(
-            os.path.join(dirname, '../images/damaged.png'))
+            os.path.join(dirname, '..', 'images', 'damaged.png'))
         
-        self.explode_spritesheet = Spritesheet(os.path.join(dirname,'../images/explode.png'))
-        self.attack_spritesheet = Spritesheet(os.path.join(dirname, '../images/attacks.png'))
+        self.explode_spritesheet = Spritesheet(os.path.join(dirname,'..', 'images', 'explode.png'))
+        self.attack_spritesheet = Spritesheet(os.path.join(dirname, '..', 'images', 'attacks.png'))
         
-        self.Wall_spritesheet = pygame.image.load(os.path.join(dirname, '../images/bricks.png'))
+        self.Wall_spritesheet = pygame.image.load(os.path.join(dirname, '..', 'images', 'bricks.png'))
 
         self.score = 0
         self.health = PLAYER_HEALTH
@@ -114,13 +114,13 @@ class Game:
         for i, row in enumerate(tilemap):
             for j, column in enumerate(row):
                 if column == "B":
-                    Wall(self, os.path.join(dirname, '../images/bricks.png'), j, i)
+                    Wall(self, os.path.join(dirname, '..', 'images', 'bricks.png'), j, i)
                 if column == 'b':
                     Ground(self, j, i)
-                    Block(self, os.path.join(dirname, '../images/Bed.png'), j, i)
+                    Block(self, os.path.join(dirname, '..', 'images', 'Bed.png'), j, i)
                 if column == 'D':
                     Ground(self, j, i)
-                    Door(self, os.path.join(dirname, '../images/Door.png'), j, i)
+                    Door(self, os.path.join(dirname, '..', 'images', 'Door.png'), j, i)
                 
                 if column == '.':
                     Ground(self, j, i)
@@ -129,7 +129,7 @@ class Game:
                     Ground(self, j, i)
                 if column == 'c':
                     Prop(self, os.path.join(
-                        dirname, '../images/coins.png'), j, i, 'chest')
+                        dirname, '..', 'images', 'coins.png'), j, i, 'chest')
                     Ground(self, j, i)
                     
                 if column == "P":
@@ -138,22 +138,22 @@ class Game:
                     
                 if column =="■":
                     Ground(self, j, i)
-                    Block(self, os.path.join(dirname, '../images/box.png'), j, i)
+                    Block(self, os.path.join(dirname, '..', 'images', 'box.png'), j, i)
                 if column == "^":
                     Ground(self, j, i)
-                    SpecDoor(self,os.path.join(dirname, '../images/Door.png'), j, i, "up")
+                    SpecDoor(self,os.path.join(dirname, '..', 'images', 'Door.png'), j, i, "up")
                     #Player(self, j, i)
                 if column == "v":
                     Ground(self, j, i)
-                    SpecDoor(self,os.path.join(dirname, '../images/Door.png'), j, i, "down")
+                    SpecDoor(self,os.path.join(dirname, '..', 'images', 'Door.png'), j, i, "down")
                     #Player(self, j, i)
                 if column == "<":
                     Ground(self, j, i)
-                    SpecDoor(self,os.path.join(dirname, '../images/Door.png'), j, i, "left")
+                    SpecDoor(self,os.path.join(dirname, '..', 'images', 'Door.png'), j, i, "left")
                     #Player(self, j, i)
                 if column == ">":
                     Ground(self, j, i)
-                    SpecDoor(self,os.path.join(dirname, '../images/Door.png'), j, i,"right")
+                    SpecDoor(self,os.path.join(dirname, '..', 'images', 'Door.png'), j, i,"right")
                     #Player(self, j, i)
                 if column == "?":
                     Ground(self, j, i)

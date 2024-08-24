@@ -8,7 +8,7 @@ dirname = os.path.dirname(__file__)
 class Menu():
     
     def __init__(self,game):
-        self.menu_background = pygame.image.load(os.path.join(dirname, "../images/Menu_Graphic.png"))
+        self.menu_background = pygame.image.load(os.path.join(dirname, "..", "images", "Menu_Graphic.png"))
         game.screen.blit(self.menu_background, (0,GAME_HEIGHT))
         
         self.last = pygame.time.get_ticks()

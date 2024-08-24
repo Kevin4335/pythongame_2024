@@ -85,7 +85,7 @@ class Box(pygame.sprite.Sprite):
             
             pygame.mixer.Sound.play(self.game.box_open)
             Prop(self.game, os.path.join(
-                dirname, '../images/potion_1.png'),self.rect.x ,self.rect.y , '1Pot')
+                dirname, '..','images','potion_1.png'),self.rect.x ,self.rect.y , '1Pot')
             self.kill()
 
 class Pedestal(pygame.sprite.Sprite):
@@ -126,13 +126,13 @@ class Purchasable(pygame.sprite.Sprite):
             
             if self.type == "AD+":
                 self.file = os.path.join(
-                            dirname, '../images/damage_buff.png')
+                            dirname, '..','images','damage_buff.png')
             elif self.type == "P+":
                 self.file = os.path.join(
-                            dirname, '../images/potion_1.png')
+                            dirname, '..','images','potion_1.png')
             elif self.type == "S+":
                 self.file = os.path.join(
-                            dirname, '../images/speed_buff.png')
+                            dirname, '..','images','speed_buff.png')
             self.item = Spritesheet(self.file)
             self.image = self.item.get_sprite(0,0,self.width,self.height)
                 
